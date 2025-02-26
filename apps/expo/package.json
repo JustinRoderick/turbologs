@@ -43,14 +43,14 @@
     "superjson": "2.2.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/runtime": "^7.26.0",
     "@turbologs/api": "workspace:*",
     "@turbologs/eslint-config": "workspace:*",
     "@turbologs/prettier-config": "workspace:*",
     "@turbologs/tailwind-config": "workspace:*",
     "@turbologs/tsconfig": "workspace:*",
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "@babel/runtime": "^7.26.0",
     "@types/babel__core": "^7.20.5",
     "@types/react": "catalog:react18",
     "eslint": "catalog:",

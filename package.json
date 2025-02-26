@@ -20,8 +20,8 @@
   },
   "prettier": "@turbologs/prettier-config",
   "devDependencies": {
-    "@turbologs/prettier-config": "workspace:*",
     "@turbo/gen": "^2.3.3",
+    "@turbologs/prettier-config": "workspace:*",
     "prettier": "catalog:",
     "turbo": "^2.3.3",
     "typescript": "catalog:"
