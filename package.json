@@ -10,7 +10,6 @@
     "dev:convex": "npx convex dev",
     "build": "vite build && tsc --noEmit",
     "start": "node .output/server/index.mjs",
-    "format": "prettier --write .",
     "lint:eslint": "tsc && eslint .  --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
