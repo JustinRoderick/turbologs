@@ -1,8 +1,8 @@
 {
   "name": "turbologs",
   "private": true,
-  "sideEffects": false,
   "type": "module",
+  "sideEffects": false,
   "scripts": {
     "dev": "npx convex dev --once && concurrently -r npm:dev:web npm:dev:convex",
     "dev:web": "vite dev",
