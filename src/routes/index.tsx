@@ -6,6 +6,14 @@ import { api } from "../../convex/_generated/api";
 
 export const Route = createFileRoute("/")({
   component: Home,
+  loader: async ({ context }) => {
+    await Promise.all([
+      context.queryClient.ensureQueryData(
+        convexQuery(api.auth.getCurrentUser, {})
+      ),
+      // Load multiple queries in parallel if needed
+    ]);
+  },
 });
 
 function Home() {

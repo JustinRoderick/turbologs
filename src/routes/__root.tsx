@@ -1,4 +1,4 @@
-import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext, useRouteContext } from "@tanstack/react-router";
 import * as React from "react";
 import type { QueryClient } from "@tanstack/react-query";
 import appCss from "~/styles/app.css?url";
