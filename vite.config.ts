@@ -17,6 +17,6 @@ export default defineConfig({
     viteReact(),
   ],
   ssr: {
-    noExternal: ['@convex-dev/better-auth'],
+    noExternal: ["@convex-dev/better-auth"],
   },
 });
