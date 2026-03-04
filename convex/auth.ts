@@ -14,20 +14,18 @@ export const createAuth = (ctx: GenericCtx<DataModel>) => {
   return betterAuth({
     baseURL: siteUrl,
     socialProviders: {
-      google: { 
-        prompt: "select_account", 
-          clientId: process.env.GOOGLE_CLIENT_ID as string, 
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET as string, 
-      }, 
-  },
+      google: {
+        prompt: "select_account",
+        clientId: process.env.GOOGLE_CLIENT_ID as string,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      },
+    },
     database: authComponent.adapter(ctx),
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: false,
     },
-    plugins: [
-      convex({ authConfig }),
-    ],
+    plugins: [convex({ authConfig })],
   });
 };
 
