@@ -2,20 +2,8 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-  users: defineTable({
-    authUserId: v.string(),
-    email: v.string(),
-    displayName: v.optional(v.string()),
-    avatarUrl: v.optional(v.string()),
-    defaultGarageId: v.optional(v.id("garages")),
-    createdAt: v.number(),
-    updatedAt: v.number(),
-  })
-    .index("by_auth_user_id", ["authUserId"])
-    .index("by_email", ["email"]),
-
   garages: defineTable({
-    ownerUserId: v.id("users"),
+    ownerAuthUserId: v.string(),
     name: v.string(),
     slug: v.optional(v.string()),
     description: v.optional(v.string()),
@@ -24,13 +12,13 @@ export default defineSchema({
     createdAt: v.number(),
     updatedAt: v.number(),
   })
-    .index("by_owner_user_id", ["ownerUserId"])
+    .index("by_owner_auth_user_id", ["ownerAuthUserId"])
     .index("by_slug", ["slug"])
     .index("by_is_archived", ["isArchived"]),
 
   garageMembers: defineTable({
     garageId: v.id("garages"),
-    userId: v.id("users"),
+    memberAuthUserId: v.string(),
     role: v.union(
       v.literal("owner"),
       v.literal("admin"),
@@ -40,14 +28,14 @@ export default defineSchema({
     ),
     status: v.union(v.literal("active"), v.literal("revoked")),
     allCars: v.boolean(),
-    invitedByUserId: v.optional(v.id("users")),
+    invitedByAuthUserId: v.optional(v.string()),
     joinedAt: v.optional(v.number()),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
     .index("by_garage_id", ["garageId"])
-    .index("by_user_id", ["userId"])
-    .index("by_garage_id_and_user_id", ["garageId", "userId"])
+    .index("by_member_auth_user_id", ["memberAuthUserId"])
+    .index("by_garage_id_and_member_auth_user_id", ["garageId", "memberAuthUserId"])
     .index("by_garage_id_and_role", ["garageId", "role"]),
 
   garageInvites: defineTable({
@@ -67,9 +55,9 @@ export default defineSchema({
       v.literal("revoked"),
       v.literal("expired"),
     ),
-    invitedByUserId: v.id("users"),
+    invitedByAuthUserId: v.string(),
     expiresAt: v.number(),
-    acceptedByUserId: v.optional(v.id("users")),
+    acceptedByAuthUserId: v.optional(v.string()),
     acceptedAt: v.optional(v.number()),
     createdAt: v.number(),
     updatedAt: v.number(),
@@ -94,7 +82,7 @@ export default defineSchema({
     runHours: v.optional(v.number()),
     isActive: v.boolean(),
     archivedAt: v.optional(v.number()),
-    createdByUserId: v.id("users"),
+    createdByAuthUserId: v.string(),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
@@ -105,7 +93,7 @@ export default defineSchema({
   carAssignments: defineTable({
     garageId: v.id("garages"),
     carId: v.id("cars"),
-    memberUserId: v.id("users"),
+    memberAuthUserId: v.string(),
     role: v.union(
       v.literal("admin"),
       v.literal("tuner"),
@@ -113,14 +101,14 @@ export default defineSchema({
       v.literal("viewer"),
     ),
     status: v.union(v.literal("active"), v.literal("revoked")),
-    assignedByUserId: v.id("users"),
+    assignedByAuthUserId: v.string(),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
     .index("by_car_id", ["carId"])
-    .index("by_member_user_id", ["memberUserId"])
-    .index("by_car_id_and_member_user_id", ["carId", "memberUserId"])
-    .index("by_garage_id_and_member_user_id", ["garageId", "memberUserId"]),
+    .index("by_member_auth_user_id", ["memberAuthUserId"])
+    .index("by_car_id_and_member_auth_user_id", ["carId", "memberAuthUserId"])
+    .index("by_garage_id_and_member_auth_user_id", ["garageId", "memberAuthUserId"]),
 
   weatherSnapshots: defineTable({
     garageId: v.id("garages"),
@@ -134,7 +122,7 @@ export default defineSchema({
     windMph: v.optional(v.number()),
     windDirectionDeg: v.optional(v.number()),
     trackTempF: v.optional(v.number()),
-    createdByUserId: v.optional(v.id("users")),
+    createdByAuthUserId: v.optional(v.string()),
     createdAt: v.number(),
   })
     .index("by_garage_id_and_observed_at", ["garageId", "observedAt"])
@@ -143,7 +131,7 @@ export default defineSchema({
   runs: defineTable({
     garageId: v.id("garages"),
     carId: v.id("cars"),
-    driverUserId: v.optional(v.id("users")),
+    driverAuthUserId: v.optional(v.string()),
     runAt: v.number(),
     trackName: v.optional(v.string()),
     eventName: v.optional(v.string()),
@@ -158,7 +146,7 @@ export default defineSchema({
     weatherSnapshotId: v.optional(v.id("weatherSnapshots")),
     activeTuneFileId: v.optional(v.id("tuneFiles")),
     notes: v.optional(v.string()),
-    createdByUserId: v.id("users"),
+    createdByAuthUserId: v.string(),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
@@ -186,7 +174,7 @@ export default defineSchema({
     engineHours: v.optional(v.number()),
     nextDueAt: v.optional(v.number()),
     nextDuePassCount: v.optional(v.number()),
-    createdByUserId: v.id("users"),
+    createdByAuthUserId: v.string(),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
@@ -208,7 +196,7 @@ export default defineSchema({
     boostPsi: v.optional(v.number()),
     ballastLbs: v.optional(v.number()),
     notes: v.optional(v.string()),
-    createdByUserId: v.id("users"),
+    createdByAuthUserId: v.string(),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
@@ -219,7 +207,7 @@ export default defineSchema({
     garageId: v.id("garages"),
     carId: v.id("cars"),
     runId: v.optional(v.id("runs")),
-    uploadedByUserId: v.id("users"),
+    uploadedByAuthUserId: v.string(),
     storageProvider: v.union(v.literal("convex_storage"), v.literal("s3")),
     storageId: v.optional(v.id("_storage")),
     s3Key: v.optional(v.string()),
@@ -255,7 +243,7 @@ export default defineSchema({
     garageId: v.id("garages"),
     carId: v.id("cars"),
     relatedRunId: v.optional(v.id("runs")),
-    uploadedByUserId: v.id("users"),
+    uploadedByAuthUserId: v.string(),
     storageProvider: v.union(v.literal("convex_storage"), v.literal("s3")),
     storageId: v.optional(v.id("_storage")),
     s3Key: v.optional(v.string()),
@@ -266,7 +254,7 @@ export default defineSchema({
     tuneVersion: v.string(),
     status: v.union(v.literal("draft"), v.literal("active"), v.literal("archived")),
     requiresOwnerApproval: v.boolean(),
-    approvedByUserId: v.optional(v.id("users")),
+    approvedByAuthUserId: v.optional(v.string()),
     approvedAt: v.optional(v.number()),
     notes: v.optional(v.string()),
     uploadedAt: v.number(),
@@ -318,9 +306,9 @@ export default defineSchema({
     quarterMph: v.optional(v.number()),
     ocrRawText: v.optional(v.string()),
     extractedAt: v.optional(v.number()),
-    reviewedByUserId: v.optional(v.id("users")),
+    reviewedByAuthUserId: v.optional(v.string()),
     reviewedAt: v.optional(v.number()),
-    createdByUserId: v.id("users"),
+    createdByAuthUserId: v.string(),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
@@ -342,7 +330,7 @@ export default defineSchema({
     confidenceScore: v.optional(v.number()),
     explanation: v.optional(v.string()),
     factorWeights: v.optional(v.record(v.string(), v.number())),
-    createdByUserId: v.optional(v.id("users")),
+    createdByAuthUserId: v.optional(v.string()),
     createdAt: v.number(),
   })
     .index("by_car_id_and_created_at", ["carId", "createdAt"])
@@ -350,7 +338,7 @@ export default defineSchema({
 
   auditEvents: defineTable({
     garageId: v.optional(v.id("garages")),
-    actorUserId: v.optional(v.id("users")),
+    actorAuthUserId: v.optional(v.string()),
     actorRole: v.optional(
       v.union(
         v.literal("owner"),
@@ -369,11 +357,6 @@ export default defineSchema({
     createdAt: v.number(),
   })
     .index("by_garage_id_and_created_at", ["garageId", "createdAt"])
-    .index("by_actor_user_id_and_created_at", ["actorUserId", "createdAt"])
+    .index("by_actor_auth_user_id_and_created_at", ["actorAuthUserId", "createdAt"])
     .index("by_entity_type_and_entity_id", ["entityType", "entityId"]),
-
-  // Kept temporarily for starter demo functions in convex/myFunctions.ts.
-  numbers: defineTable({
-    value: v.number(),
-  }),
 });
