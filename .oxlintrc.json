@@ -65,7 +65,7 @@
         "sort-imports": [
           "error",
           {
-            "ignoreDeclarationSort": true
+            "ignoreDeclarationSort": false
           }
         ],
         "use-isnan": "error",
