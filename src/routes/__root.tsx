@@ -6,13 +6,13 @@ import {
   useRouteContext,
 } from "@tanstack/react-router";
 import * as React from "react";
+import { createServerFn } from "@tanstack/react-start";
+import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
 import type { QueryClient } from "@tanstack/react-query";
+import type { ConvexQueryClient } from "@convex-dev/react-query";
 import appCss from "~/styles/app.css?url";
 import { Toaster } from "~/components/ui/sonner";
 import { TooltipProvider } from "~/components/ui/tooltip";
-import { createServerFn } from "@tanstack/react-start";
-import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
-import type { ConvexQueryClient } from "@convex-dev/react-query";
 import { authClient } from "~/lib/auth-client";
 import { getToken } from "~/lib/auth-server";
 
