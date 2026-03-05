@@ -42,12 +42,7 @@ export default defineSchema({
     garageId: v.id("garages"),
     email: v.optional(v.string()),
     inviteToken: v.string(),
-    role: v.union(
-      v.literal("admin"),
-      v.literal("tuner"),
-      v.literal("worker"),
-      v.literal("viewer"),
-    ),
+    role: v.union(v.literal("admin"), v.literal("tuner"), v.literal("worker"), v.literal("viewer")),
     carScope: v.union(v.literal("all_cars"), v.literal("selected_cars")),
     status: v.union(
       v.literal("pending"),
@@ -94,12 +89,7 @@ export default defineSchema({
     garageId: v.id("garages"),
     carId: v.id("cars"),
     memberAuthUserId: v.string(),
-    role: v.union(
-      v.literal("admin"),
-      v.literal("tuner"),
-      v.literal("worker"),
-      v.literal("viewer"),
-    ),
+    role: v.union(v.literal("admin"), v.literal("tuner"), v.literal("worker"), v.literal("viewer")),
     status: v.union(v.literal("active"), v.literal("revoked")),
     assignedByAuthUserId: v.string(),
     createdAt: v.number(),

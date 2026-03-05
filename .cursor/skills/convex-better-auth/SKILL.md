@@ -167,13 +167,10 @@ import authConfig from "../auth.config";
 import schema from "./schema";
 
 // Better Auth Component
-export const authComponent = createClient<DataModel, typeof schema>(
-  components.betterAuth,
-  {
-    local: { schema },
-    verbose: false,
-  },
-);
+export const authComponent = createClient<DataModel, typeof schema>(components.betterAuth, {
+  local: { schema },
+  verbose: false,
+});
 
 // Better Auth Options
 export const createAuthOptions = (ctx: GenericCtx<DataModel>) => {
@@ -219,15 +216,8 @@ import { createApi } from "@convex-dev/better-auth";
 import { createAuthOptions } from "./auth";
 import schema from "./schema";
 
-export const {
-  create,
-  findOne,
-  findMany,
-  updateOne,
-  updateMany,
-  deleteOne,
-  deleteMany,
-} = createApi(schema, createAuthOptions);
+export const { create, findOne, findMany, updateOne, updateMany, deleteOne, deleteMany } =
+  createApi(schema, createAuthOptions);
 ```
 
 </Step>
@@ -320,11 +310,7 @@ export function ConvexClientProvider({
   initialToken?: string | null;
 }) {
   return (
-    <ConvexBetterAuthProvider
-      client={convex}
-      authClient={authClient}
-      initialToken={initialToken}
-    >
+    <ConvexBetterAuthProvider client={convex} authClient={authClient} initialToken={initialToken}>
       {children}
     </ConvexBetterAuthProvider>
   );
@@ -346,9 +332,7 @@ export default async function RootLayout({
   return (
     <html>
       <body>
-        <ConvexClientProvider initialToken={token}>
-          {children}
-        </ConvexClientProvider>
+        <ConvexClientProvider initialToken={token}>{children}</ConvexClientProvider>
       </body>
     </html>
   );
