@@ -13,6 +13,7 @@ import type { ConvexQueryClient } from "@convex-dev/react-query";
 import appCss from "~/styles/app.css?url";
 import { Toaster } from "~/components/ui/sonner";
 import { TooltipProvider } from "~/components/ui/tooltip";
+import { ThemeProvider } from "~/components/theme/ThemeToggle";
 import { authClient } from "~/lib/auth-client";
 import { getToken } from "~/lib/auth-server";
 
@@ -100,9 +101,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <TooltipProvider>{children}</TooltipProvider>
-        <Scripts />
-        <Toaster />
+        <ThemeProvider>
+          <TooltipProvider>{children}</TooltipProvider>
+          <Scripts />
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );
