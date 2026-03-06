@@ -1,14 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { 
-  BarChart, 
-  Check, 
-  CloudLightning, 
-  Gauge, 
-  Settings2, 
-  Trophy, 
-  Zap 
-} from "lucide-react";
+import { BarChart, Check, CloudLightning, Gauge, Settings2, Trophy, Zap } from "lucide-react";
 import { Button } from "../components/ui/button";
 import {
   Card,
@@ -23,9 +15,8 @@ import { Badge } from "../components/ui/badge";
 export function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-50 dark:bg-gray-950 font-sans selection:bg-red-500/30 selection:text-red-900 dark:selection:text-red-100">
-      
       {/* Navigation */}
-      <motion.nav 
+      <motion.nav
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -39,18 +30,37 @@ export function Home() {
             Turbologs
           </span>
         </div>
-        
+
         <div className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-gray-600 dark:text-gray-300">
-          <a href="#features" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">Features</a>
-          <a href="#pricing" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">Pricing</a>
-          <a href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">Community</a>
+          <a
+            href="#features"
+            className="hover:text-red-600 dark:hover:text-red-500 transition-colors"
+          >
+            Features
+          </a>
+          <a
+            href="#pricing"
+            className="hover:text-red-600 dark:hover:text-red-500 transition-colors"
+          >
+            Pricing
+          </a>
+          <a href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">
+            Community
+          </a>
         </div>
-        
+
         <div className="flex items-center gap-3">
-          <Button variant="ghost" className="rounded-full hidden sm:inline-flex px-5 font-semibold tracking-wide" asChild>
+          <Button
+            variant="ghost"
+            className="rounded-full hidden sm:inline-flex px-5 font-semibold tracking-wide"
+            asChild
+          >
             <Link to="/">Login</Link>
           </Button>
-          <Button className="rounded-full px-5 bg-red-600 hover:bg-red-700 text-white font-semibold tracking-wide shadow-md shadow-red-600/20" asChild>
+          <Button
+            className="rounded-full px-5 bg-red-600 hover:bg-red-700 text-white font-semibold tracking-wide shadow-md shadow-red-600/20"
+            asChild
+          >
             <Link to="/">Get Started</Link>
           </Button>
         </div>
@@ -58,7 +68,6 @@ export function Home() {
 
       {/* Hero Section */}
       <section className="w-full flex flex-col items-center justify-center pt-48 pb-24 px-4 sm:px-6 relative overflow-hidden">
-        
         {/* Abstract Background Effects */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-red-600/10 dark:bg-red-600/20 blur-[100px] rounded-full point-events-none" />
         <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-blue-600/5 dark:bg-blue-600/10 blur-[100px] rounded-full point-events-none" />
@@ -69,50 +78,63 @@ export function Home() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <Badge variant="outline" className="rounded-full border-red-500/30 text-red-700 dark:text-red-400 bg-red-500/10 px-4 py-1.5 font-medium mb-6 backdrop-blur-sm">
+            <Badge
+              variant="outline"
+              className="rounded-full border-red-500/30 text-red-700 dark:text-red-400 bg-red-500/10 px-4 py-1.5 font-medium mb-6 backdrop-blur-sm"
+            >
               <Zap className="w-3.5 h-3.5 mr-2 inline-block" />
               The Data Platform for Drag Racers
             </Badge>
           </motion.div>
-          
-          <motion.h1 
+
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tighter text-gray-900 dark:text-white uppercase leading-[1.1]"
           >
-            Dominate the Strip. <br/>
+            Dominate the Strip. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">
               Master Your Data.
             </span>
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
             className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto tracking-normal font-medium"
           >
-            Stop guessing. Start winning. Turbologs is the ultimate all-in-one data platform that collects, analyzes, and visualizes your drag racing data to perfect your next ET.
+            Stop guessing. Start winning. Turbologs is the ultimate all-in-one data platform that
+            collects, analyzes, and visualizes your drag racing data to perfect your next ET.
           </motion.p>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
           >
-            <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-red-600 hover:bg-red-700 text-white shadow-xl shadow-red-600/30 font-bold uppercase tracking-wider" asChild>
+            <Button
+              size="lg"
+              className="rounded-full px-8 py-6 text-lg bg-red-600 hover:bg-red-700 text-white shadow-xl shadow-red-600/30 font-bold uppercase tracking-wider"
+              asChild
+            >
               <Link to="/">Start Logging For Free</Link>
             </Button>
-            <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-lg font-bold uppercase tracking-wider bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-gray-300 dark:border-gray-700" asChild>
+            <Button
+              size="lg"
+              variant="outline"
+              className="rounded-full px-8 py-6 text-lg font-bold uppercase tracking-wider bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-gray-300 dark:border-gray-700"
+              asChild
+            >
               <Link to="/">View Demo</Link>
             </Button>
           </motion.div>
         </div>
-        
+
         {/* Dashboard Preview Mockup */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
@@ -123,52 +145,57 @@ export function Home() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.1)_0,transparent_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
             <div className="flex flex-col items-center opacity-50 dark:opacity-30">
               <LineChartIcon className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 text-gray-400 dark:text-gray-600 mb-4" />
-              <span className="text-xl md:text-2xl font-bold font-mono tracking-widest text-gray-500 dark:text-gray-500 uppercase">Dashboard Preview</span>
+              <span className="text-xl md:text-2xl font-bold font-mono tracking-widest text-gray-500 dark:text-gray-500 uppercase">
+                Dashboard Preview
+              </span>
             </div>
           </div>
         </motion.div>
-
       </section>
 
       {/* Features Section */}
       <section id="features" className="w-full max-w-6xl mx-auto py-24 px-4 sm:px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter uppercase mb-4">Built for <span className="text-red-600">Speed</span></h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Everything you need to dial in your setup, all in one robust platform.</p>
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter uppercase mb-4">
+            Built for <span className="text-red-600">Speed</span>
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Everything you need to dial in your setup, all in one robust platform.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <FeatureCard 
+          <FeatureCard
             icon={<BarChart className="w-6 h-6 text-red-500" />}
             title="Run Logging"
             description="Log every pass with incredible detail. Instantly access timeslips, track conditions, and vehicle increments."
             delay={0.1}
           />
-          <FeatureCard 
+          <FeatureCard
             icon={<CloudLightning className="w-6 h-6 text-red-500" />}
             title="Weather Tracking"
             description="Automatically pull DA, temperature, humidity, and wind data for every run. Know exactly how the air affected your ET."
             delay={0.2}
           />
-          <FeatureCard 
+          <FeatureCard
             icon={<Settings2 className="w-6 h-6 text-red-500" />}
             title="Setup Management"
             description="Keep track of tire pressure, suspension changes, gearing, and tune-ups. See what works and what doesn't."
             delay={0.3}
           />
-          <FeatureCard 
+          <FeatureCard
             icon={<Gauge className="w-6 h-6 text-red-500" />}
             title="Data Analytics"
             description="Compare runs side-by-side with beautiful charts. Identify trends and make data-driven decisions in the staging lanes."
             delay={0.4}
           />
-          <FeatureCard 
+          <FeatureCard
             icon={<Trophy className="w-6 h-6 text-red-500" />}
             title="Maintenance Log"
             description="Never wonder when you last changed the oil or checked the valves. Track all maintenance tied to run counts."
             delay={0.5}
           />
-          <FeatureCard 
+          <FeatureCard
             icon={<BoltIcon className="w-6 h-6 text-red-500" />}
             title="Predictive ET"
             description="Use your historical run data and current weather conditions to let our algorithm predict your dial-in."
@@ -180,8 +207,12 @@ export function Home() {
       {/* Pricing Section */}
       <section id="pricing" className="w-full max-w-5xl mx-auto py-24 px-4 sm:px-6 relative">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter uppercase mb-4">Simple <span className="text-red-600">Pricing</span></h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Choose the plan that fits your racing program.</p>
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter uppercase mb-4">
+            Simple <span className="text-red-600">Pricing</span>
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Choose the plan that fits your racing program.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -194,8 +225,12 @@ export function Home() {
           >
             <Card className="h-full bg-white dark:bg-gray-900 shadow-xl border-gray-200 dark:border-gray-800 rounded-3xl overflow-hidden hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
               <CardHeader className="p-8 pb-4">
-                <CardTitle className="text-2xl font-bold uppercase tracking-tight">Sportsman</CardTitle>
-                <CardDescription className="text-base mt-2">Perfect for weekend warriors getting started with data.</CardDescription>
+                <CardTitle className="text-2xl font-bold uppercase tracking-tight">
+                  Sportsman
+                </CardTitle>
+                <CardDescription className="text-base mt-2">
+                  Perfect for weekend warriors getting started with data.
+                </CardDescription>
                 <div className="mt-4 flex items-baseline text-5xl font-extrabold tracking-tighter">
                   $0
                   <span className="ml-1 text-xl font-medium text-gray-500">/mo</span>
@@ -208,19 +243,24 @@ export function Home() {
                     "Basic Weather Data",
                     "1 Vehicle Profile",
                     "Timeslip Entry",
-                    "Community Access"
+                    "Community Access",
                   ].map((feature, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <div className="rounded-full bg-gray-100 dark:bg-gray-800 p-1">
                         <Check className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                       </div>
-                      <span className="text-gray-700 dark:text-gray-300 font-medium">{feature}</span>
+                      <span className="text-gray-700 dark:text-gray-300 font-medium">
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
               <CardFooter className="p-8 pt-0 mt-auto">
-                <Button className="w-full rounded-2xl py-6 text-lg font-bold uppercase tracking-wider bg-gray-900 hover:bg-gray-800 text-white dark:bg-gray-100 dark:hover:bg-white dark:text-gray-900" asChild>
+                <Button
+                  className="w-full rounded-2xl py-6 text-lg font-bold uppercase tracking-wider bg-gray-900 hover:bg-gray-800 text-white dark:bg-gray-100 dark:hover:bg-white dark:text-gray-900"
+                  asChild
+                >
                   <Link to="/">Start Free</Link>
                 </Button>
               </CardFooter>
@@ -237,11 +277,17 @@ export function Home() {
             <Card className="h-full bg-white dark:bg-[#0a0a0a] shadow-2xl shadow-red-900/10 border-red-500/50 dark:border-red-500/30 rounded-3xl overflow-hidden relative group">
               <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent pointer-events-none" />
               <div className="absolute top-0 inset-x-0 h-1 bg-red-600" />
-              <Badge className="absolute top-6 right-8 bg-red-600 hover:bg-red-600 text-white uppercase font-bold tracking-wider px-3 py-1">Top Fuel</Badge>
-              
+              <Badge className="absolute top-6 right-8 bg-red-600 hover:bg-red-600 text-white uppercase font-bold tracking-wider px-3 py-1">
+                Top Fuel
+              </Badge>
+
               <CardHeader className="p-8 pb-4 relative z-10">
-                <CardTitle className="text-2xl font-bold uppercase tracking-tight text-gray-900 dark:text-white">Pro Racer</CardTitle>
-                <CardDescription className="text-base mt-2 dark:text-gray-400">For serious competitors who need every advantage.</CardDescription>
+                <CardTitle className="text-2xl font-bold uppercase tracking-tight text-gray-900 dark:text-white">
+                  Pro Racer
+                </CardTitle>
+                <CardDescription className="text-base mt-2 dark:text-gray-400">
+                  For serious competitors who need every advantage.
+                </CardDescription>
                 <div className="mt-4 flex items-baseline text-5xl font-extrabold tracking-tighter text-gray-900 dark:text-white">
                   $15
                   <span className="ml-1 text-xl font-medium text-gray-500">/mo</span>
@@ -256,19 +302,24 @@ export function Home() {
                     "Advanced Analytics & Charts",
                     "Predictive ET Algorithm",
                     "Maintenance Tracking",
-                    "Priority Support"
+                    "Priority Support",
                   ].map((feature, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <div className="rounded-full bg-red-100 dark:bg-red-900/30 p-1">
                         <Check className="w-4 h-4 text-red-600 dark:text-red-400" />
                       </div>
-                      <span className="text-gray-900 dark:text-gray-100 font-medium">{feature}</span>
+                      <span className="text-gray-900 dark:text-gray-100 font-medium">
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
               <CardFooter className="p-8 pt-0 mt-auto relative z-10">
-                <Button className="w-full rounded-2xl py-6 text-lg font-bold uppercase tracking-wider bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/25" asChild>
+                <Button
+                  className="w-full rounded-2xl py-6 text-lg font-bold uppercase tracking-wider bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/25"
+                  asChild
+                >
                   <Link to="/">Go Pro Today</Link>
                 </Button>
               </CardFooter>
@@ -288,9 +339,15 @@ export function Home() {
             © {new Date().getFullYear()} Turbologs. All rights reserved.
           </div>
           <div className="flex gap-6 text-sm font-medium text-gray-500 dark:text-gray-400">
-            <a href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">Terms</a>
-            <a href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">Contact</a>
+            <a href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">
+              Terms
+            </a>
+            <a href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">
+              Contact
+            </a>
           </div>
         </div>
       </footer>
@@ -299,7 +356,17 @@ export function Home() {
 }
 
 // Helper Components
-function FeatureCard({ icon, title, description, delay }: { icon: React.ReactNode, title: string, description: string, delay: number }) {
+function FeatureCard({
+  icon,
+  title,
+  description,
+  delay,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  delay: number;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
