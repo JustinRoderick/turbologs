@@ -15,7 +15,8 @@
     "lint:fix": "oxlint --fix",
     "lint:type-aware": "oxlint --type-aware",
     "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check"
+    "fmt:check": "oxfmt --check",
+    "env:validate": "better-env validate --environment development"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",
@@ -31,6 +32,7 @@
     "@tanstack/react-start": "^1.166.2",
     "@tanstack/react-table": "^8.21.3",
     "better-auth": "1.4.9",
+    "better-env": "^0.3.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
