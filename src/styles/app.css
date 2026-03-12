@@ -67,7 +67,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: Inter, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono Variable', monospace;
+  --font-mono: "JetBrains Mono Variable", monospace;
   --font-serif: Georgia, serif;
   --radius: 0.5rem;
   --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
