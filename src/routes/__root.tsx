@@ -96,11 +96,11 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html>
+    <html className="bg-gray-950 dark:bg-gray-950">
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="bg-gray-950 dark:bg-gray-950">
         <ThemeProvider>
           <TooltipProvider>{children}</TooltipProvider>
           <Scripts />
