@@ -62,12 +62,6 @@
         "no-with": "error",
         "prefer-const": "error",
         "require-yield": "error",
-        "sort-imports": [
-          "error",
-          {
-            "ignoreDeclarationSort": false
-          }
-        ],
         "use-isnan": "error",
         "valid-typeof": "error",
         "@typescript-eslint/array-type": [
