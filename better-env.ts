@@ -1,5 +1,5 @@
-import { convexAdapter, defineBetterEnv } from "better-env";
+// import { convexAdapter, defineBetterEnv } from "better-env";
 
-export default defineBetterEnv({
-  adapter: convexAdapter(),
-});
+// export default defineBetterEnv({
+//   adapter: convexAdapter(),
+// });
