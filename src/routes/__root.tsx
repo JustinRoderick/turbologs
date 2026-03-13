@@ -16,10 +16,16 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme/ThemeToggle";
 import { authClient } from "@/lib/auth-client";
 import { getToken } from "@/lib/auth-server";
+import { PostHogProvider } from "posthog-js/react";
 
 const getAuth = createServerFn({ method: "GET" }).handler(async () => {
   return await getToken();
 });
+
+const posthogOptions = {
+  api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
+  defaults: '2026-01-30',
+} as const
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -82,15 +88,20 @@ export const Route = createRootRouteWithContext<{
 function RootComponent() {
   const context = useRouteContext({ from: Route.id });
   return (
-    <ConvexBetterAuthProvider
-      client={context.convexQueryClient.convexClient}
-      authClient={authClient}
-      initialToken={context.token}
+    <PostHogProvider
+      apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
+      options={posthogOptions}
     >
-      <RootDocument>
-        <Outlet />
-      </RootDocument>
-    </ConvexBetterAuthProvider>
+      <ConvexBetterAuthProvider
+        client={context.convexQueryClient.convexClient}
+        authClient={authClient}
+        initialToken={context.token}
+      >
+        <RootDocument>
+          <Outlet />
+        </RootDocument>
+      </ConvexBetterAuthProvider>
+    </PostHogProvider>
   );
 }
 
