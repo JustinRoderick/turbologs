@@ -16,7 +16,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme/ThemeToggle";
 import { authClient } from "@/lib/auth-client";
 import { getToken } from "@/lib/auth-server";
-import { PostHogProvider } from "posthog-js/react";
+import { PostHogProviderClient } from "@/components/PostHogProviderClient";
 
 const getAuth = createServerFn({ method: "GET" }).handler(async () => {
   return await getToken();
@@ -88,8 +88,8 @@ export const Route = createRootRouteWithContext<{
 function RootComponent() {
   const context = useRouteContext({ from: Route.id });
   return (
-    <PostHogProvider
-      apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
+    <PostHogProviderClient
+      apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY ?? ""}
       options={posthogOptions}
     >
       <ConvexBetterAuthProvider
@@ -101,7 +101,7 @@ function RootComponent() {
           <Outlet />
         </RootDocument>
       </ConvexBetterAuthProvider>
-    </PostHogProvider>
+    </PostHogProviderClient>
   );
 }
 
