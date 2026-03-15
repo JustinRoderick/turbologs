@@ -2,8 +2,11 @@ import { action } from "./_generated/server";
 import { components } from "./_generated/api";
 import { StripeSubscriptions } from "@convex-dev/stripe";
 import { v } from "convex/values";
+import { env } from "./env";
 
 const stripeClient = new StripeSubscriptions(components.stripe, {});
+const successUrl = new URL("/?success=true", env.SITE_URL).toString();
+const cancelUrl = new URL("/?canceled=true", env.SITE_URL).toString();
 
 // Create a checkout session for a subscription
 export const createSubscriptionCheckout = action({
@@ -28,8 +31,8 @@ export const createSubscriptionCheckout = action({
       priceId: args.priceId,
       customerId: customer.customerId,
       mode: "subscription",
-      successUrl: "http://localhost:5173/?success=true",
-      cancelUrl: "http://localhost:5173/?canceled=true",
+      successUrl,
+      cancelUrl,
       subscriptionMetadata: { userId: identity.subject },
     });
   },
@@ -55,8 +58,8 @@ export const createPaymentCheckout = action({
       priceId: args.priceId,
       customerId: customer.customerId,
       mode: "payment",
-      successUrl: "http://localhost:5173/?success=true",
-      cancelUrl: "http://localhost:5173/?canceled=true",
+      successUrl,
+      cancelUrl,
       paymentIntentMetadata: { userId: identity.subject },
     });
   },
