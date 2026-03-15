@@ -8,18 +8,17 @@ import { query } from "./_generated/server";
 import type { GenericCtx } from "@convex-dev/better-auth";
 import type { DataModel } from "./_generated/dataModel";
 import type { MutationCtx, QueryCtx } from "./_generated/server";
-
-const siteUrl = process.env.SITE_URL!;
+import { env } from "./env";
 
 export const authComponent = createClient<DataModel>(components.betterAuth);
 export const createAuth = (ctx: GenericCtx<DataModel>) => {
   return betterAuth({
-    baseURL: siteUrl,
+    baseURL: env.SITE_URL,
     socialProviders: {
       google: {
         prompt: "select_account",
-        clientId: process.env.GOOGLE_CLIENT_ID as string,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+        clientId: env.GOOGLE_CLIENT_ID,
+        clientSecret: env.GOOGLE_CLIENT_SECRET,
       },
     },
     database: authComponent.adapter(ctx),

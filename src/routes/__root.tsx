@@ -15,6 +15,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme/ThemeToggle";
 import { authClient } from "@/lib/auth-client";
+import { clientEnv } from "@/env/client";
 import { getToken } from "@/lib/auth-server";
 import { PostHogProvider } from "@posthog/react";
 
@@ -23,7 +24,7 @@ const getAuth = createServerFn({ method: "GET" }).handler(async () => {
 });
 
 const posthogOptions = {
-  api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
+  api_host: clientEnv.VITE_PUBLIC_POSTHOG_HOST,
   defaults: "2026-01-30",
   capture_exceptions: true,
 } as const;
@@ -94,7 +95,7 @@ function RootComponent() {
       authClient={authClient}
       initialToken={context.token}
     >
-      <PostHogProvider apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY} options={posthogOptions}>
+      <PostHogProvider apiKey={clientEnv.VITE_PUBLIC_POSTHOG_KEY} options={posthogOptions}>
         <RootDocument>
           <Outlet />
         </RootDocument>
