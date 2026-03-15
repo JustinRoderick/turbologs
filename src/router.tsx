@@ -2,11 +2,11 @@ import { createRouter } from "@tanstack/react-router";
 import { QueryClient } from "@tanstack/react-query";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { ConvexQueryClient } from "@convex-dev/react-query";
-import { clientEnv } from "@/env/client";
+import { env } from "@/env";
 import { routeTree } from "./routeTree.gen";
 
 export function getRouter() {
-  const convexQueryClient = new ConvexQueryClient(clientEnv.VITE_CONVEX_URL, {
+  const convexQueryClient = new ConvexQueryClient(env.VITE_CONVEX_URL, {
     expectAuth: true,
   });
 
