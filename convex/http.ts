@@ -7,7 +7,7 @@ const http = httpRouter();
 
 authComponent.registerRoutes(http, createAuth);
 registerRoutes(http, components.stripe, {
-    webhookPath: "/stripe/webhook",
-  });
+  webhookPath: "/stripe/webhook",
+});
 
 export default http;

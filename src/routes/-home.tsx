@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+import { motion } from "motion/react";
 import { BarChart, Check, CloudLightning, Gauge, Settings2, Trophy, Zap } from "lucide-react";
 import {
   Card,
@@ -10,8 +12,6 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Link } from "@tanstack/react-router";
-import { motion } from "motion/react";
 
 export function Home() {
   return (
