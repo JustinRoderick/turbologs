@@ -12,15 +12,21 @@ The following environment variables must be set (injected as secrets or written 
 
 - `VITE_CONVEX_URL` — Convex deployment URL (used by the frontend at runtime)
 - `CONVEX_DEPLOYMENT` — Convex deployment identifier (used by `npx convex dev`)
+- `VITE_CONVEX_SITE_URL` — Convex HTTP endpoint URL (validated at startup by `src/env.ts`)
+- `VITE_PUBLIC_POSTHOG_KEY` — PostHog project API key (validated at startup; use a placeholder like `placeholder_key` if unavailable)
+- `VITE_PUBLIC_POSTHOG_HOST` — PostHog host URL (validated at startup; use `https://us.i.posthog.com` as placeholder)
 
 ### Running the app
 
 - **Dev server (web only):** `npx vite dev --port 3000` — starts the Vite SSR dev server on port 3000. This connects to the cloud Convex backend via `VITE_CONVEX_URL`.
 - **Full dev (web + Convex watcher):** `npm run dev` — runs `npx convex dev --once` then concurrently starts the Vite dev server and Convex dev watcher. The Convex watcher requires `CONVEX_DEPLOYMENT` and will push schema/function changes to the cloud.
-- The `.env.local` file must exist with `VITE_CONVEX_URL` and `CONVEX_DEPLOYMENT` for the dev server to work. If secrets are available as environment variables, create it with:
+- The `.env.local` file must exist with all five validated variables for the dev server to work. If secrets are available as environment variables, create it with:
   ```
   echo "VITE_CONVEX_URL=$VITE_CONVEX_URL" > .env.local
   echo "CONVEX_DEPLOYMENT=$CONVEX_DEPLOYMENT" >> .env.local
+  echo "VITE_CONVEX_SITE_URL=$VITE_CONVEX_SITE_URL" >> .env.local
+  echo "VITE_PUBLIC_POSTHOG_KEY=${VITE_PUBLIC_POSTHOG_KEY:-placeholder_key}" >> .env.local
+  echo "VITE_PUBLIC_POSTHOG_HOST=${VITE_PUBLIC_POSTHOG_HOST:-https://us.i.posthog.com}" >> .env.local
   ```
 
 ### Lint / Build / Format
