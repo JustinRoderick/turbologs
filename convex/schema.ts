@@ -36,7 +36,8 @@ export default defineSchema({
     .index("by_garage_id", ["garageId"])
     .index("by_member_auth_user_id", ["memberAuthUserId"])
     .index("by_garage_id_and_member_auth_user_id", ["garageId", "memberAuthUserId"])
-    .index("by_garage_id_and_role", ["garageId", "role"]),
+    .index("by_garage_id_and_role", ["garageId", "role"])
+    .index("by_member_auth_user_id_and_status", ["memberAuthUserId", "status"]),
 
   garageInvites: defineTable({
     garageId: v.id("garages"),
@@ -325,6 +326,40 @@ export default defineSchema({
   })
     .index("by_car_id_and_created_at", ["carId", "createdAt"])
     .index("by_generated_for_run_id", ["generatedForRunId"]),
+
+  userOnboarding: defineTable({
+    authUserId: v.string(),
+    status: v.union(
+      v.literal("not_started"),
+      v.literal("in_progress"),
+      v.literal("completed"),
+      v.literal("skipped"),
+    ),
+    currentStepId: v.union(
+      v.literal("welcome"),
+      v.literal("choose_path"),
+      v.literal("create_garage"),
+      v.literal("invite"),
+      v.literal("first_car"),
+      v.literal("done"),
+    ),
+    pathChoice: v.optional(
+      v.union(v.literal("create"), v.literal("invite"), v.literal("browse")),
+    ),
+    draftGarage: v.optional(
+      v.object({
+        name: v.string(),
+        slug: v.optional(v.string()),
+        description: v.optional(v.string()),
+        location: v.optional(v.string()),
+      }),
+    ),
+    draftInviteToken: v.optional(v.string()),
+    onboardingVersion: v.number(),
+    updatedAt: v.number(),
+    completedAt: v.optional(v.number()),
+    skippedAt: v.optional(v.number()),
+  }).index("by_auth_user_id", ["authUserId"]),
 
   auditEvents: defineTable({
     garageId: v.optional(v.id("garages")),
