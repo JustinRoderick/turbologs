@@ -2,10 +2,6 @@ import type { MutationCtx } from "./_generated/server";
 
 const ONBOARDING_VERSION = 1;
 
-/**
- * Marks onboarding complete when the user gains an active garage membership.
- * Creates a row if missing so UI state cannot drift behind reality.
- */
 export async function completeOnboardingAfterGarageMembership(
   ctx: MutationCtx,
   authUserId: string,
