@@ -1,6 +1,7 @@
 import { ConvexError, v } from "convex/values";
 import { mutation } from "./_generated/server";
 import { requireAuthUserId } from "./auth";
+import { completeOnboardingAfterGarageMembership } from "./onboardingSync";
 
 export const createGarage = mutation({
   args: {
@@ -46,6 +47,8 @@ export const createGarage = mutation({
       createdAt: now,
       updatedAt: now,
     });
+
+    await completeOnboardingAfterGarageMembership(ctx, authUserId);
 
     return garageId;
   },
