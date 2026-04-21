@@ -32,16 +32,12 @@ export const createAuth = (ctx: GenericCtx<DataModel>) => {
 
 type AuthUserIdCtx = Pick<QueryCtx, "auth"> | Pick<MutationCtx, "auth">;
 
-export const getAuthUserId = async (
-  ctx: AuthUserIdCtx,
-): Promise<string | null> => {
+export const getAuthUserId = async (ctx: AuthUserIdCtx): Promise<string | null> => {
   const identity = await ctx.auth.getUserIdentity();
   return identity?.subject ?? null;
 };
 
-export const requireAuthUserId = async (
-  ctx: AuthUserIdCtx,
-): Promise<string> => {
+export const requireAuthUserId = async (ctx: AuthUserIdCtx): Promise<string> => {
   const authUserId = await getAuthUserId(ctx);
   if (!authUserId) {
     throw new ConvexError("Unauthorized");

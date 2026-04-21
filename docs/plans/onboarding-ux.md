@@ -11,11 +11,11 @@ This document expands the product and technical plan for first-time (and returni
 
 ## User states
 
-| State | Rule |
-|--------|------|
-| **Anonymous** | Not signed in; no onboarding queries/mutations (except invite preview by secret token). |
-| **Authenticated, no active garage** | No `garageMembers` document with `status === "active"` for this `authUserId`. |
-| **Authenticated, has garage** | At least one active membership. Onboarding is auto-marked **completed** when membership is created (create garage or accept invite). |
+| State                               | Rule                                                                                                                                 |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Anonymous**                       | Not signed in; no onboarding queries/mutations (except invite preview by secret token).                                              |
+| **Authenticated, no active garage** | No `garageMembers` document with `status === "active"` for this `authUserId`.                                                        |
+| **Authenticated, has garage**       | At least one active membership. Onboarding is auto-marked **completed** when membership is created (create garage or accept invite). |
 
 ### Completion rules
 
@@ -27,14 +27,14 @@ This document expands the product and technical plan for first-time (and returni
 
 ### Step IDs (machine)
 
-| `currentStepId` | Purpose |
-|-----------------|--------|
-| `welcome` | Value prop: garage vs community; Continue. |
-| `choose_path` | Branch: create garage / have invite / browse only. |
-| `create_garage` | Short form: name (required), slug, description, location (optional). Submits `garages.createGarage`. |
-| `invite` | Paste invite token (or land with `?step=invite&token=`). Preview + `acceptGarageInvite`. |
-| `first_car` | Reserved for a future “add first car” step inside the wizard; MVP can jump to success after garage membership. |
-| `done` | Terminal UI state after `completed` (optional success screen). |
+| `currentStepId` | Purpose                                                                                                        |
+| --------------- | -------------------------------------------------------------------------------------------------------------- |
+| `welcome`       | Value prop: garage vs community; Continue.                                                                     |
+| `choose_path`   | Branch: create garage / have invite / browse only.                                                             |
+| `create_garage` | Short form: name (required), slug, description, location (optional). Submits `garages.createGarage`.           |
+| `invite`        | Paste invite token (or land with `?step=invite&token=`). Preview + `acceptGarageInvite`.                       |
+| `first_car`     | Reserved for a future “add first car” step inside the wizard; MVP can jump to success after garage membership. |
+| `done`          | Terminal UI state after `completed` (optional success screen).                                                 |
 
 ### Copy outline (draft for design)
 
@@ -81,18 +81,18 @@ This document expands the product and technical plan for first-time (and returni
 
 Single document per user, keyed by `authUserId` (same identifier as `garageMembers.memberAuthUserId` / `requireAuthUserId`).
 
-| Field | Type | Notes |
-|-------|------|--------|
-| `authUserId` | `string` | Unique via index `by_auth_user_id`. |
-| `status` | `not_started` \| `in_progress` \| `completed` \| `skipped` | `not_started` rarely stored; prefer implicit until first write. |
-| `currentStepId` | union of step IDs | Terminal: `done` when completed. |
-| `pathChoice` | optional `create` \| `invite` \| `browse` | Analytics + resume context. |
-| `draftGarage` | optional `{ name, slug?, description?, location? }` | Partial create form. |
-| `draftInviteToken` | optional `string` | Saved token before accept. |
-| `onboardingVersion` | `number` | Bump when flow changes; enables migrations. |
-| `updatedAt` | `number` | `Date.now()`. |
-| `completedAt` | optional `number` | Set when `completed`. |
-| `skippedAt` | optional `number` | Set when `skipped`. |
+| Field               | Type                                                       | Notes                                                           |
+| ------------------- | ---------------------------------------------------------- | --------------------------------------------------------------- |
+| `authUserId`        | `string`                                                   | Unique via index `by_auth_user_id`.                             |
+| `status`            | `not_started` \| `in_progress` \| `completed` \| `skipped` | `not_started` rarely stored; prefer implicit until first write. |
+| `currentStepId`     | union of step IDs                                          | Terminal: `done` when completed.                                |
+| `pathChoice`        | optional `create` \| `invite` \| `browse`                  | Analytics + resume context.                                     |
+| `draftGarage`       | optional `{ name, slug?, description?, location? }`        | Partial create form.                                            |
+| `draftInviteToken`  | optional `string`                                          | Saved token before accept.                                      |
+| `onboardingVersion` | `number`                                                   | Bump when flow changes; enables migrations.                     |
+| `updatedAt`         | `number`                                                   | `Date.now()`.                                                   |
+| `completedAt`       | optional `number`                                          | Set when `completed`.                                           |
+| `skippedAt`         | optional `number`                                          | Set when `skipped`.                                             |
 
 ### Convex functions (public)
 
@@ -114,13 +114,13 @@ Single document per user, keyed by `authUserId` (same identifier as `garageMembe
 
 ## Routing and triggers
 
-| Trigger | Behavior |
-|---------|----------|
-| User visits `/onboarding` | Authenticated: show wizard from `currentStepId` or start at `welcome` and persist on first step change. Unauthenticated: prompt to sign in. |
-| Search params | `?step=invite&token=…` deep-links to invite step with token prefilled. |
-| After sign-up / sign-in (future) | Optional soft navigate to `/onboarding` if `!hasActiveGarage && onboarding.status` not `completed` and not `skipped`. |
-| Resume banner | Shown when authenticated, `!hasActiveGarage`, and onboarding is `in_progress` or `skipped` (or no row yet—product choice: MVP shows banner only when row exists and not completed; optional expansion to “never started” with CTA). **Implemented:** banner when `!hasActiveGarage` and onboarding is not `completed`. |
-| Settings / account | Link “Garage setup” → `/onboarding` (add when account UI exists). |
+| Trigger                          | Behavior                                                                                                                                                                                                                                                                                                               |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User visits `/onboarding`        | Authenticated: show wizard from `currentStepId` or start at `welcome` and persist on first step change. Unauthenticated: prompt to sign in.                                                                                                                                                                            |
+| Search params                    | `?step=invite&token=…` deep-links to invite step with token prefilled.                                                                                                                                                                                                                                                 |
+| After sign-up / sign-in (future) | Optional soft navigate to `/onboarding` if `!hasActiveGarage && onboarding.status` not `completed` and not `skipped`.                                                                                                                                                                                                  |
+| Resume banner                    | Shown when authenticated, `!hasActiveGarage`, and onboarding is `in_progress` or `skipped` (or no row yet—product choice: MVP shows banner only when row exists and not completed; optional expansion to “never started” with CTA). **Implemented:** banner when `!hasActiveGarage` and onboarding is not `completed`. |
+| Settings / account               | Link “Garage setup” → `/onboarding` (add when account UI exists).                                                                                                                                                                                                                                                      |
 
 ## Edge cases
 
@@ -147,16 +147,16 @@ PostHog or equivalent:
 
 ## Implementation map
 
-| Area | Location |
-|------|----------|
-| Schema | `convex/schema.ts` |
-| Onboarding API | `convex/onboarding.ts` |
-| Membership helper query | `convex/garageMembers.ts` |
-| Invite preview + accept | `convex/garageInvites.ts` |
-| Sync helper | `convex/onboardingSync.ts` |
-| `createGarage` hook | `convex/garages.ts` |
-| UI | `src/routes/onboarding.tsx`, `src/components/onboarding/OnboardingResumeBanner.tsx` |
-| Root shell | `src/routes/__root.tsx` |
+| Area                    | Location                                                                            |
+| ----------------------- | ----------------------------------------------------------------------------------- |
+| Schema                  | `convex/schema.ts`                                                                  |
+| Onboarding API          | `convex/onboarding.ts`                                                              |
+| Membership helper query | `convex/garageMembers.ts`                                                           |
+| Invite preview + accept | `convex/garageInvites.ts`                                                           |
+| Sync helper             | `convex/onboardingSync.ts`                                                          |
+| `createGarage` hook     | `convex/garages.ts`                                                                 |
+| UI                      | `src/routes/onboarding.tsx`, `src/components/onboarding/OnboardingResumeBanner.tsx` |
+| Root shell              | `src/routes/__root.tsx`                                                             |
 
 ## Future work
 

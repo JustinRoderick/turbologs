@@ -343,9 +343,7 @@ export default defineSchema({
       v.literal("first_car"),
       v.literal("done"),
     ),
-    pathChoice: v.optional(
-      v.union(v.literal("create"), v.literal("invite"), v.literal("browse")),
-    ),
+    pathChoice: v.optional(v.union(v.literal("create"), v.literal("invite"), v.literal("browse"))),
     draftGarage: v.optional(
       v.object({
         name: v.string(),

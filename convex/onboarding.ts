@@ -13,11 +13,7 @@ const onboardingStepIdValidator = v.union(
   v.literal("done"),
 );
 
-const pathChoiceValidator = v.union(
-  v.literal("create"),
-  v.literal("invite"),
-  v.literal("browse"),
-);
+const pathChoiceValidator = v.union(v.literal("create"), v.literal("invite"), v.literal("browse"));
 
 const draftGarageValidator = v.object({
   name: v.string(),
