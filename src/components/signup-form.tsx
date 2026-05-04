@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import { sanitizeAppPath } from "@/lib/safe-redirect";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,7 +41,7 @@ export type SignupFormProps = Omit<React.ComponentProps<"form">, "onSubmit"> & {
   callbackURL?: string;
 };
 
-export function SignupForm({ className, callbackURL = "/", ...props }: SignupFormProps) {
+export function SignupForm({ className, callbackURL = "/onboarding", ...props }: SignupFormProps) {
   const navigate = useNavigate();
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -88,7 +89,8 @@ export function SignupForm({ className, callbackURL = "/", ...props }: SignupFor
         return;
       }
       toast.success("Account created");
-      await navigate({ to: callbackURL });
+      const next = sanitizeAppPath(callbackURL, "/onboarding");
+      await navigate({ href: next });
     } finally {
       setIsSubmitting(false);
     }
@@ -181,7 +183,11 @@ export function SignupForm({ className, callbackURL = "/", ...props }: SignupFor
           </Button>
           <FieldDescription className="px-6 text-center">
             Already have an account?{" "}
-            <Link to="/auth/sign-in" className="underline underline-offset-4">
+            <Link
+              to="/auth/sign-in"
+              search={{ redirect: undefined }}
+              className="underline underline-offset-4"
+            >
               Sign in
             </Link>
           </FieldDescription>

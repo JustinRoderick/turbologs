@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import { sanitizeAppPath } from "@/lib/safe-redirect";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,11 +38,11 @@ function GoogleIcon({ className }: { className?: string }) {
 }
 
 export type LoginFormProps = Omit<React.ComponentProps<"form">, "onSubmit"> & {
-  /** Post-login redirect (path or URL). Default `/`. */
+  /** Post-login redirect (same-origin path). Default `/dashboard`. */
   callbackURL?: string;
 };
 
-export function LoginForm({ className, callbackURL = "/", ...props }: LoginFormProps) {
+export function LoginForm({ className, callbackURL = "/dashboard", ...props }: LoginFormProps) {
   const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -77,7 +78,8 @@ export function LoginForm({ className, callbackURL = "/", ...props }: LoginFormP
         return;
       }
       toast.success("Signed in");
-      await navigate({ to: callbackURL });
+      const next = sanitizeAppPath(callbackURL, "/dashboard");
+      await navigate({ href: next });
     } finally {
       setIsSubmitting(false);
     }
