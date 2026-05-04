@@ -1,9 +1,13 @@
+import { getRouteApi } from "@tanstack/react-router";
 import { LoginForm } from "@/components/login-form";
-// change to actual logo
-import { GalleryVerticalEnd } from "lucide-react"
+import { sanitizeAppPath } from "@/lib/safe-redirect";
+import { GalleryVerticalEnd } from "lucide-react";
 
+const signInRouteApi = getRouteApi("/auth/sign-in");
 
 export default function SignInScreen() {
+  const { redirect: redirectParam } = signInRouteApi.useSearch();
+  const callbackURL = sanitizeAppPath(redirectParam, "/dashboard");
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -17,7 +21,7 @@ export default function SignInScreen() {
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
-            <LoginForm />
+            <LoginForm callbackURL={callbackURL} />
           </div>
         </div>
       </div>
