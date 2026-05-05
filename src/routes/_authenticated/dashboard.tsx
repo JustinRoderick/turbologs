@@ -51,18 +51,18 @@ function DashboardPage() {
       </header>
 
       {garages.length === 0 ? (
-        <Card className="border-gray-800 bg-gray-900">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
-              <Building2 className="size-5 text-red-500" />
+              <Building2 className="size-5" />
               No garages yet
             </CardTitle>
-            <CardDescription className="text-gray-400">
+            <CardDescription>
               Create a new garage or join one with an invite to start logging runs and tunes.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-3">
-            <Button asChild className="bg-red-600 hover:bg-red-700">
+            <Button asChild>
               <Link
                 to="/onboarding"
                 search={{ intent: "create" }}
@@ -72,7 +72,7 @@ function DashboardPage() {
                 Create a garage
               </Link>
             </Button>
-            <Button variant="outline" asChild className="border-gray-700">
+            <Button variant="outline" asChild>
               <Link
                 to="/onboarding"
                 search={{ intent: "join" }}
@@ -88,10 +88,10 @@ function DashboardPage() {
         <ul className="grid gap-3 sm:grid-cols-2">
           {garages.map((g: MyGarageRow) => (
             <li key={g.garageId}>
-              <Card className="border-gray-800 bg-gray-900 transition-colors hover:border-gray-700">
+              <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base">{g.name}</CardTitle>
-                  <CardDescription className="capitalize text-gray-400">
+                  <CardDescription className="capitalize">
                     Role: {g.role}
                     {g.slug ? ` · ${g.slug}` : ""}
                   </CardDescription>

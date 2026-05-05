@@ -53,15 +53,12 @@ export function Home() {
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
-            className="rounded-full hidden sm:inline-flex px-5 font-semibold tracking-wide"
+            className="hidden rounded-full px-5 font-semibold tracking-wide sm:inline-flex"
             asChild
           >
             <Link to="/">Login</Link>
           </Button>
-          <Button
-            className="rounded-full px-5 bg-red-600 hover:bg-red-700 text-white font-semibold tracking-wide shadow-md shadow-red-600/20"
-            asChild
-          >
+          <Button className="rounded-full px-5 font-semibold tracking-wide" asChild>
             <Link to="/">Get Started</Link>
           </Button>
         </div>
@@ -81,7 +78,7 @@ export function Home() {
           >
             <Badge
               variant="outline"
-              className="rounded-full border-red-500/30 text-red-700 dark:text-red-400 bg-red-500/10 px-4 py-1.5 font-medium mb-6 backdrop-blur-sm"
+              className="mb-6 rounded-full px-4 py-1.5 font-medium"
             >
               <Zap className="w-3.5 h-3.5 mr-2 inline-block" />
               The Data Platform for Drag Racers
@@ -118,7 +115,7 @@ export function Home() {
           >
             <Button
               size="lg"
-              className="rounded-full px-8 py-6 text-lg bg-red-600 hover:bg-red-700 text-white shadow-xl shadow-red-600/30 font-bold uppercase tracking-wider"
+              className="rounded-full px-8 py-6 text-lg font-bold uppercase tracking-wider"
               asChild
             >
               <Link to="/">Start Logging For Free</Link>
@@ -126,7 +123,7 @@ export function Home() {
             <Button
               size="lg"
               variant="outline"
-              className="rounded-full px-8 py-6 text-lg font-bold uppercase tracking-wider bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-gray-300 dark:border-gray-700"
+              className="rounded-full px-8 py-6 text-lg font-bold uppercase tracking-wider"
               asChild
             >
               <Link to="/">View Demo</Link>
@@ -224,7 +221,7 @@ export function Home() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
           >
-            <Card className="h-full bg-white dark:bg-gray-900 shadow-xl border-gray-200 dark:border-gray-800 rounded-3xl overflow-hidden hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+            <Card className="h-full overflow-hidden">
               <CardHeader className="p-8 pb-4">
                 <CardTitle className="text-2xl font-bold uppercase tracking-tight">
                   Sportsman
@@ -257,9 +254,9 @@ export function Home() {
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter className="p-8 pt-0 mt-auto">
+              <CardFooter className="mt-auto p-8 pt-0">
                 <Button
-                  className="w-full rounded-2xl py-6 text-lg font-bold uppercase tracking-wider bg-gray-900 hover:bg-gray-800 text-white dark:bg-gray-100 dark:hover:bg-white dark:text-gray-900"
+                  className="w-full rounded-2xl py-6 text-lg font-bold uppercase tracking-wider"
                   asChild
                 >
                   <Link to="/">Start Free</Link>
@@ -275,26 +272,26 @@ export function Home() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Card className="h-full bg-white dark:bg-[#0a0a0a] shadow-2xl shadow-red-900/10 border-red-500/50 dark:border-red-500/30 rounded-3xl overflow-hidden relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent pointer-events-none" />
-              <div className="absolute top-0 inset-x-0 h-1 bg-red-600" />
-              <Badge className="absolute top-6 right-8 bg-red-600 hover:bg-red-600 text-white uppercase font-bold tracking-wider px-3 py-1">
+            <Card className="group relative h-full overflow-hidden">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
+              <div className="absolute top-0 inset-x-0 h-1 bg-primary" />
+              <Badge className="absolute top-6 right-8 px-3 py-1 font-bold uppercase tracking-wider">
                 Top Fuel
               </Badge>
 
-              <CardHeader className="p-8 pb-4 relative z-10">
-                <CardTitle className="text-2xl font-bold uppercase tracking-tight text-gray-900 dark:text-white">
+              <CardHeader className="relative z-10 p-8 pb-4">
+                <CardTitle className="text-2xl font-bold uppercase tracking-tight">
                   Pro Racer
                 </CardTitle>
-                <CardDescription className="text-base mt-2 dark:text-gray-400">
+                <CardDescription className="mt-2 text-base">
                   For serious competitors who need every advantage.
                 </CardDescription>
-                <div className="mt-4 flex items-baseline text-5xl font-extrabold tracking-tighter text-gray-900 dark:text-white">
+                <div className="mt-4 flex items-baseline text-5xl font-extrabold tracking-tighter">
                   $15
                   <span className="ml-1 text-xl font-medium text-gray-500">/mo</span>
                 </div>
               </CardHeader>
-              <CardContent className="p-8 pt-4 relative z-10">
+              <CardContent className="relative z-10 p-8 pt-4">
                 <ul className="space-y-4">
                   {[
                     "Unlimited Runs Logged",
@@ -316,9 +313,9 @@ export function Home() {
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter className="p-8 pt-0 mt-auto relative z-10">
+              <CardFooter className="relative z-10 mt-auto p-8 pt-0">
                 <Button
-                  className="w-full rounded-2xl py-6 text-lg font-bold uppercase tracking-wider bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/25"
+                  className="w-full rounded-2xl py-6 text-lg font-bold uppercase tracking-wider"
                   asChild
                 >
                   <Link to="/">Go Pro Today</Link>
@@ -376,7 +373,7 @@ function FeatureCard({
       transition={{ duration: 0.5, delay }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
     >
-      <Card className="h-full bg-white dark:bg-[#0a0a0a] border-gray-200 dark:border-gray-800 shadow-lg hover:shadow-xl hover:shadow-red-900/5 dark:hover:border-gray-700 transition-all duration-300 rounded-3xl overflow-hidden group">
+      <Card className="group h-full overflow-hidden transition-all duration-300">
         <CardHeader className="pb-2">
           <div className="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-950/50 flex items-center justify-center mb-4 group-hover:bg-red-100 dark:group-hover:bg-red-900/50 transition-colors">
             {icon}

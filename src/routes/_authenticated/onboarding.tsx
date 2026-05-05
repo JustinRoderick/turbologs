@@ -57,37 +57,33 @@ function OnboardingPage() {
 
   return (
     <div className="mx-auto flex max-w-lg flex-col gap-8 px-4 py-12">
-      <Card className="border-gray-800 bg-gray-900">
+      <Card>
         <CardHeader>
           <CardTitle className="text-xl">{headline}</CardTitle>
-          <CardDescription className="text-gray-400">{sub}</CardDescription>
+          <CardDescription>{sub}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {onboarding === null ? (
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-muted-foreground">
               Welcome to Turbologs. Continue to record your onboarding progress and set up your
               workspace.
             </p>
           ) : (
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-muted-foreground">
               Current step:{" "}
-              <span className="font-medium text-gray-100">{onboarding.currentStepId}</span>
+              <span className="font-medium text-foreground">{onboarding.currentStepId}</span>
               {onboarding.status === "in_progress" ? " (in progress)" : null}
             </p>
           )}
           <div className="flex flex-wrap gap-3">
-            <Button
-              className="bg-red-600 hover:bg-red-700"
-              onClick={() => void handleStart()}
-              type="button"
-            >
+            <Button onClick={() => void handleStart()} type="button">
               {onboarding === null ? "Start onboarding" : "Save progress (welcome step)"}
             </Button>
             <Button variant="ghost" asChild>
               <Link to="/">Return home</Link>
             </Button>
           </div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-muted-foreground">
             Completing onboarding marks your account ready for garages and team invites.
           </p>
         </CardContent>
