@@ -1,4 +1,5 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { OnboardingResumeBanner } from "@/components/onboarding/OnboardingResumeBanner";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ context, location }) => {
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/_authenticated")({
 function AuthenticatedLayout() {
   return (
     <div className="min-h-svh bg-gray-950 text-gray-100">
+      <OnboardingResumeBanner />
       <Outlet />
     </div>
   );

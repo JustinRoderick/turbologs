@@ -155,8 +155,9 @@ PostHog or equivalent:
 | Invite preview + accept | `convex/garageInvites.ts`                                                           |
 | Sync helper             | `convex/onboardingSync.ts`                                                          |
 | `createGarage` hook     | `convex/garages.ts`                                                                 |
-| UI                      | `src/routes/onboarding.tsx`, `src/components/onboarding/OnboardingResumeBanner.tsx` |
-| Root shell              | `src/routes/__root.tsx`                                                             |
+| UI                      | `src/routes/_authenticated/onboarding.tsx`, `src/components/onboarding/OnboardingWizard.tsx`, `src/components/onboarding/OnboardingResumeBanner.tsx` |
+| Authenticated shell     | `src/routes/_authenticated.tsx` (resume banner)                                     |
+| Gate helpers            | `src/lib/onboarding-gate.ts`, `src/lib/onboarding-state.ts`                         |
 
 ## Future work
 

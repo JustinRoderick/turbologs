@@ -1,11 +1,10 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "convex/react";
 import { Building2, Plus, UserPlus } from "lucide-react";
 import type { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getDashboardOnboardingGate } from "@/lib/dashboard-gate";
 
 type MyGarageRow = {
   garageId: Id<"garages">;
@@ -15,12 +14,6 @@ type MyGarageRow = {
 };
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
-  beforeLoad: async () => {
-    const gate = await getDashboardOnboardingGate();
-    if (gate.needsOnboarding) {
-      throw redirect({ to: "/onboarding", search: { intent: undefined } });
-    }
-  },
   component: DashboardPage,
 });
 
@@ -59,7 +52,7 @@ function DashboardPage() {
             <Button asChild>
               <Link
                 to="/onboarding"
-                search={{ intent: "create" }}
+                search={{ step: undefined, token: undefined, intent: "create" }}
                 className="inline-flex items-center gap-2"
               >
                 <Plus className="size-4" />
@@ -69,7 +62,7 @@ function DashboardPage() {
             <Button variant="outline" asChild>
               <Link
                 to="/onboarding"
-                search={{ intent: "join" }}
+                search={{ step: "invite", token: undefined, intent: "join" }}
                 className="inline-flex items-center gap-2"
               >
                 <UserPlus className="size-4" />
