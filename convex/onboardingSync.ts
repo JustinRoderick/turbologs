@@ -24,7 +24,11 @@ export async function completeOnboardingAfterGarageMembership(
     return;
   }
 
-  await ctx.db.patch(existing._id, {
+  if (existing.status === "completed") {
+    return;
+  }
+
+  await ctx.db.patch("userOnboarding", existing._id, {
     status: "completed",
     currentStepId: "done",
     updatedAt: now,
