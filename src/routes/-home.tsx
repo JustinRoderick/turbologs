@@ -76,10 +76,7 @@ export function Home() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <Badge
-              variant="outline"
-              className="mb-6 rounded-full px-4 py-1.5 font-medium"
-            >
+            <Badge variant="outline" className="mb-6 rounded-full px-4 py-1.5 font-medium">
               <Zap className="w-3.5 h-3.5 mr-2 inline-block" />
               The Data Platform for Drag Racers
             </Badge>

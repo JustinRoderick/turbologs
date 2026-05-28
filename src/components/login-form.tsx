@@ -86,11 +86,7 @@ export function LoginForm({ className, callbackURL = "/dashboard", ...props }: L
   }
 
   return (
-    <form
-      className={cn("flex flex-col gap-6", className)}
-      onSubmit={handleSubmit}
-      {...props}
-    >
+    <form className={cn("flex flex-col gap-6", className)} onSubmit={handleSubmit} {...props}>
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
           <h1 className="text-2xl font-bold">Login to your account</h1>
@@ -114,10 +110,7 @@ export function LoginForm({ className, callbackURL = "/dashboard", ...props }: L
         <Field>
           <div className="flex items-center">
             <FieldLabel htmlFor="login-password">Password</FieldLabel>
-            <a
-              href="#"
-              className="ml-auto text-sm underline-offset-4 hover:underline"
-            >
+            <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
               Forgot your password?
             </a>
           </div>

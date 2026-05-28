@@ -1,6 +1,6 @@
 import { SignupForm } from "@/components/signup-form";
 // change to actual logo
-import { GalleryVerticalEnd } from "lucide-react"
+import { GalleryVerticalEnd } from "lucide-react";
 
 export default function SignUpScreen() {
   return (
