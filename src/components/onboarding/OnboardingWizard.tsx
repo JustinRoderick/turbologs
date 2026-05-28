@@ -6,10 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { api } from "../../../convex/_generated/api";
 import type { Doc } from "../../../convex/_generated/dataModel";
-import {
-  ONBOARDING_ANALYTICS_VERSION,
-  captureOnboardingEvent,
-} from "@/lib/onboarding-analytics";
+import { ONBOARDING_ANALYTICS_VERSION, captureOnboardingEvent } from "@/lib/onboarding-analytics";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
@@ -44,7 +41,8 @@ export function OnboardingWizard({ search }: OnboardingWizardProps) {
   const startedRef = useRef(false);
   const lastTrackedStep = useRef<OnboardingStepId | null>(null);
 
-  const activeStep = step ?? (onboarding !== undefined ? resolveInitialStep(onboarding, search) : null);
+  const activeStep =
+    step ?? (onboarding !== undefined ? resolveInitialStep(onboarding, search) : null);
 
   useEffect(() => {
     if (onboarding === undefined) {
@@ -256,7 +254,9 @@ export function OnboardingWizard({ search }: OnboardingWizardProps) {
         <Card>
           <CardHeader>
             <CardTitle className="text-xl">Name your garage</CardTitle>
-            <CardDescription>Required fields are marked. Slug must be unique if provided.</CardDescription>
+            <CardDescription>
+              Required fields are marked. Slug must be unique if provided.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form className="flex flex-col gap-4" onSubmit={(e) => void handleCreateGarage(e)}>
@@ -317,8 +317,8 @@ export function OnboardingWizard({ search }: OnboardingWizardProps) {
           <CardHeader>
             <CardTitle className="text-xl">Join with an invite</CardTitle>
             <CardDescription>
-              Paste the token from your invite link. If the invite was emailed to a specific address,
-              sign in with that email.
+              Paste the token from your invite link. If the invite was emailed to a specific
+              address, sign in with that email.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -337,7 +337,9 @@ export function OnboardingWizard({ search }: OnboardingWizardProps) {
                 <p className="text-xs text-muted-foreground">Checking invite…</p>
               ) : null}
               {invitePreview === null && inviteToken.trim() ? (
-                <p className="text-sm text-destructive">Invite not found. Check the token and try again.</p>
+                <p className="text-sm text-destructive">
+                  Invite not found. Check the token and try again.
+                </p>
               ) : null}
               {invitePreview ? (
                 <div className="rounded-lg border border-border/60 bg-muted/30 px-3 py-2 text-sm">
@@ -345,7 +347,9 @@ export function OnboardingWizard({ search }: OnboardingWizardProps) {
                   <p className="text-muted-foreground capitalize">
                     Role: {invitePreview.role}
                     {invitePreview.isExpired ? " · Expired" : ""}
-                    {invitePreview.inviteStatus !== "pending" ? ` · ${invitePreview.inviteStatus}` : ""}
+                    {invitePreview.inviteStatus !== "pending"
+                      ? ` · ${invitePreview.inviteStatus}`
+                      : ""}
                   </p>
                 </div>
               ) : null}
@@ -365,10 +369,16 @@ export function OnboardingWizard({ search }: OnboardingWizardProps) {
         <Card>
           <CardHeader>
             <CardTitle className="text-xl">You&apos;re in</CardTitle>
-            <CardDescription>Your account is ready. Head to the dashboard to get started.</CardDescription>
+            <CardDescription>
+              Your account is ready. Head to the dashboard to get started.
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="w-full" onClick={() => void navigate({ to: "/dashboard" })} type="button">
+            <Button
+              className="w-full"
+              onClick={() => void navigate({ to: "/dashboard" })}
+              type="button"
+            >
               Go to dashboard
             </Button>
           </CardContent>

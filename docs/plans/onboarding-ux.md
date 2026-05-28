@@ -147,17 +147,17 @@ PostHog or equivalent:
 
 ## Implementation map
 
-| Area                    | Location                                                                            |
-| ----------------------- | ----------------------------------------------------------------------------------- |
-| Schema                  | `convex/schema.ts`                                                                  |
-| Onboarding API          | `convex/onboarding.ts`                                                              |
-| Membership helper query | `convex/garageMembers.ts`                                                           |
-| Invite preview + accept | `convex/garageInvites.ts`                                                           |
-| Sync helper             | `convex/onboardingSync.ts`                                                          |
-| `createGarage` hook     | `convex/garages.ts`                                                                 |
+| Area                    | Location                                                                                                                                             |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Schema                  | `convex/schema.ts`                                                                                                                                   |
+| Onboarding API          | `convex/onboarding.ts`                                                                                                                               |
+| Membership helper query | `convex/garageMembers.ts`                                                                                                                            |
+| Invite preview + accept | `convex/garageInvites.ts`                                                                                                                            |
+| Sync helper             | `convex/onboardingSync.ts`                                                                                                                           |
+| `createGarage` hook     | `convex/garages.ts`                                                                                                                                  |
 | UI                      | `src/routes/_authenticated/onboarding.tsx`, `src/components/onboarding/OnboardingWizard.tsx`, `src/components/onboarding/OnboardingResumeBanner.tsx` |
-| Authenticated shell     | `src/routes/_authenticated.tsx` (resume banner)                                     |
-| Gate helpers            | `src/lib/onboarding-gate.ts`, `src/lib/onboarding-state.ts`                         |
+| Authenticated shell     | `src/routes/_authenticated.tsx` (resume banner)                                                                                                      |
+| Gate helpers            | `src/lib/onboarding-gate.ts`, `src/lib/onboarding-state.ts`                                                                                          |
 
 ## Future work
 

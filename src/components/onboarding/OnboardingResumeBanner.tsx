@@ -38,7 +38,10 @@ export function OnboardingResumeBanner() {
         <p className="text-sm text-red-100/90">{message}</p>
         <div className="flex shrink-0 items-center gap-2">
           <Button size="sm" variant="secondary" asChild>
-            <Link to="/onboarding" search={{ step: undefined, token: undefined, intent: undefined }}>
+            <Link
+              to="/onboarding"
+              search={{ step: undefined, token: undefined, intent: undefined }}
+            >
               {cta}
             </Link>
           </Button>
