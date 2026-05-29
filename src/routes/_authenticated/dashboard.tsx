@@ -75,15 +75,17 @@ function DashboardPage() {
         <ul className="grid gap-3 sm:grid-cols-2">
           {garages.map((g: MyGarageRow) => (
             <li key={g.garageId}>
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base">{g.name}</CardTitle>
-                  <CardDescription className="capitalize">
-                    Role: {g.role}
-                    {g.slug ? ` · ${g.slug}` : ""}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <Link to="/garages/$garageId" params={{ garageId: g.garageId }}>
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base">{g.name}</CardTitle>
+                    <CardDescription className="capitalize">
+                      Role: {g.role}
+                      {g.slug ? ` · ${g.slug}` : ""}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
             </li>
           ))}
         </ul>
