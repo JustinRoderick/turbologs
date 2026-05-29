@@ -45,6 +45,7 @@ export default defineSchema({
     inviteToken: v.string(),
     role: v.union(v.literal("admin"), v.literal("tuner"), v.literal("worker"), v.literal("viewer")),
     carScope: v.union(v.literal("all_cars"), v.literal("selected_cars")),
+    selectedCarIds: v.optional(v.array(v.id("cars"))),
     status: v.union(
       v.literal("pending"),
       v.literal("accepted"),
@@ -55,12 +56,43 @@ export default defineSchema({
     expiresAt: v.number(),
     acceptedByAuthUserId: v.optional(v.string()),
     acceptedAt: v.optional(v.number()),
+    emailId: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
     .index("by_invite_token", ["inviteToken"])
     .index("by_garage_id_and_status", ["garageId", "status"])
-    .index("by_email_and_status", ["email", "status"]),
+    .index("by_email_and_status", ["email", "status"])
+    .index("by_garage_id_and_email_and_status", ["garageId", "email", "status"]),
+
+  garageAccessRequests: defineTable({
+    garageId: v.id("garages"),
+    requesterAuthUserId: v.string(),
+    requesterEmail: v.string(),
+    message: v.optional(v.string()),
+    requestedRole: v.union(
+      v.literal("admin"),
+      v.literal("tuner"),
+      v.literal("worker"),
+      v.literal("viewer"),
+    ),
+    carScope: v.union(v.literal("all_cars"), v.literal("selected_cars")),
+    selectedCarIds: v.optional(v.array(v.id("cars"))),
+    status: v.union(
+      v.literal("pending"),
+      v.literal("approved"),
+      v.literal("denied"),
+      v.literal("cancelled"),
+    ),
+    reviewedByAuthUserId: v.optional(v.string()),
+    reviewedAt: v.optional(v.number()),
+    emailId: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_garage_id_and_status", ["garageId", "status"])
+    .index("by_requester_auth_user_id_and_status", ["requesterAuthUserId", "status"])
+    .index("by_garage_id_and_requester_auth_user_id", ["garageId", "requesterAuthUserId"]),
 
   cars: defineTable({
     garageId: v.id("garages"),

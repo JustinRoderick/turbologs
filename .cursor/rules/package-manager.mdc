@@ -1,0 +1,10 @@
+---
+description: Use Bun for package management in this repository
+alwaysApply: true
+---
+
+# Package Manager
+
+- This repository uses `bun.lock`, so install dependencies with `bun add` or `bun install`.
+- Run project scripts with `bun run <script>` unless a task explicitly requires `npx` or a documented Convex/Vite command.
+- Do not use `npm install` or add an npm lockfile.
