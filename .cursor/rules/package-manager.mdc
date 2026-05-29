@@ -6,5 +6,9 @@ alwaysApply: true
 # Package Manager
 
 - This repository uses `bun.lock`, so install dependencies with `bun add` or `bun install`.
-- Run project scripts with `bun run <script>` unless a task explicitly requires `npx` or a documented Convex/Vite command.
-- Do not use `npm install` or add an npm lockfile.
+- Use Bun instead of npm for package operations:
+  - `bun add <package>` instead of `npm install <package>`
+  - `bun install` instead of `npm install`
+  - `bun run <script>` instead of `npm run <script>`
+  - `bunx <command>` instead of `npx <command>` unless project docs explicitly require `npx`
+- Do not add an npm lockfile.
