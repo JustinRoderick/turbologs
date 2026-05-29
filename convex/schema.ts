@@ -65,6 +65,75 @@ export default defineSchema({
   cars: defineTable({
     garageId: v.id("garages"),
     name: v.string(),
+    vehicleKind: v.optional(
+      v.union(
+        v.literal("car"),
+        v.literal("truck"),
+        v.literal("motorcycle"),
+        v.literal("boat"),
+        v.literal("other"),
+      ),
+    ),
+    motorsportCategory: v.optional(
+      v.union(
+        v.literal("drag_racing"),
+        v.literal("nascar"),
+        v.literal("drifting"),
+        v.literal("general"),
+      ),
+    ),
+    motorsportProfile: v.optional(
+      v.union(
+        v.object({
+          category: v.literal("drag_racing"),
+          competitionClass: v.optional(v.string()),
+          powerAdder: v.optional(
+            v.union(
+              v.literal("naturally_aspirated"),
+              v.literal("turbo"),
+              v.literal("supercharged"),
+              v.literal("nitrous"),
+              v.literal("other"),
+            ),
+          ),
+          dialInSeconds: v.optional(v.number()),
+          transmission: v.optional(v.string()),
+          tireSize: v.optional(v.string()),
+          tireCompound: v.optional(v.string()),
+        }),
+        v.object({
+          category: v.literal("nascar"),
+          series: v.optional(
+            v.union(v.literal("cup"), v.literal("xfinity"), v.literal("trucks"), v.literal("other")),
+          ),
+          carNumber: v.optional(v.string()),
+          teamName: v.optional(v.string()),
+          restrictorPlate: v.optional(v.boolean()),
+          setupNotes: v.optional(v.string()),
+        }),
+        v.object({
+          category: v.literal("drifting"),
+          competitionClass: v.optional(v.string()),
+          horsepower: v.optional(v.number()),
+          angleKit: v.optional(v.boolean()),
+          tireCompoundFront: v.optional(v.string()),
+          tireCompoundRear: v.optional(v.string()),
+        }),
+        v.object({
+          category: v.literal("general"),
+          disciplineNotes: v.optional(v.string()),
+        }),
+      ),
+    ),
+    marineProfile: v.optional(
+      v.object({
+        hullType: v.optional(v.string()),
+        engineType: v.optional(
+          v.union(v.literal("jet"), v.literal("outboard"), v.literal("inboard"), v.literal("other")),
+        ),
+        lengthFt: v.optional(v.number()),
+      }),
+    ),
     year: v.optional(v.number()),
     make: v.optional(v.string()),
     model: v.optional(v.string()),
@@ -74,6 +143,7 @@ export default defineSchema({
     tire: v.optional(v.string()),
     weightLbs: v.optional(v.number()),
     drivetrain: v.optional(v.string()),
+    notes: v.optional(v.string()),
     totalPasses: v.number(),
     runHours: v.optional(v.number()),
     isActive: v.boolean(),
