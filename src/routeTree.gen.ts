@@ -16,6 +16,8 @@ import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as AuthenticatedGaragesGarageIdIndexRouteImport } from './routes/_authenticated/garages/$garageId/index'
+import { Route as AuthenticatedGaragesGarageIdVehiclesNewRouteImport } from './routes/_authenticated/garages/$garageId/vehicles/new'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -51,6 +53,18 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedGaragesGarageIdIndexRoute =
+  AuthenticatedGaragesGarageIdIndexRouteImport.update({
+    id: '/garages/$garageId/',
+    path: '/garages/$garageId/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedGaragesGarageIdVehiclesNewRoute =
+  AuthenticatedGaragesGarageIdVehiclesNewRouteImport.update({
+    id: '/garages/$garageId/vehicles/new',
+    path: '/garages/$garageId/vehicles/new',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,6 +73,8 @@ export interface FileRoutesByFullPath {
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/garages/$garageId/': typeof AuthenticatedGaragesGarageIdIndexRoute
+  '/garages/$garageId/vehicles/new': typeof AuthenticatedGaragesGarageIdVehiclesNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -67,6 +83,8 @@ export interface FileRoutesByTo {
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/garages/$garageId': typeof AuthenticatedGaragesGarageIdIndexRoute
+  '/garages/$garageId/vehicles/new': typeof AuthenticatedGaragesGarageIdVehiclesNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,6 +95,8 @@ export interface FileRoutesById {
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/_authenticated/garages/$garageId/': typeof AuthenticatedGaragesGarageIdIndexRoute
+  '/_authenticated/garages/$garageId/vehicles/new': typeof AuthenticatedGaragesGarageIdVehiclesNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,6 +107,8 @@ export interface FileRouteTypes {
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/api/auth/$'
+    | '/garages/$garageId/'
+    | '/garages/$garageId/vehicles/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -95,6 +117,8 @@ export interface FileRouteTypes {
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/api/auth/$'
+    | '/garages/$garageId'
+    | '/garages/$garageId/vehicles/new'
   id:
     | '__root__'
     | '/'
@@ -104,6 +128,8 @@ export interface FileRouteTypes {
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/api/auth/$'
+    | '/_authenticated/garages/$garageId/'
+    | '/_authenticated/garages/$garageId/vehicles/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -165,17 +191,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/garages/$garageId/': {
+      id: '/_authenticated/garages/$garageId/'
+      path: '/garages/$garageId'
+      fullPath: '/garages/$garageId/'
+      preLoaderRoute: typeof AuthenticatedGaragesGarageIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/garages/$garageId/vehicles/new': {
+      id: '/_authenticated/garages/$garageId/vehicles/new'
+      path: '/garages/$garageId/vehicles/new'
+      fullPath: '/garages/$garageId/vehicles/new'
+      preLoaderRoute: typeof AuthenticatedGaragesGarageIdVehiclesNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedGaragesGarageIdIndexRoute: typeof AuthenticatedGaragesGarageIdIndexRoute
+  AuthenticatedGaragesGarageIdVehiclesNewRoute: typeof AuthenticatedGaragesGarageIdVehiclesNewRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedGaragesGarageIdIndexRoute:
+    AuthenticatedGaragesGarageIdIndexRoute,
+  AuthenticatedGaragesGarageIdVehiclesNewRoute:
+    AuthenticatedGaragesGarageIdVehiclesNewRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
