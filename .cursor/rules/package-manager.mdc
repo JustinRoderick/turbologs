@@ -1,0 +1,14 @@
+---
+description: Use Bun for package management in this repository
+alwaysApply: true
+---
+
+# Package Manager
+
+- This repository uses `bun.lock`, so install dependencies with `bun add` or `bun install`.
+- Use Bun instead of npm for package operations:
+  - `bun add <package>` instead of `npm install <package>`
+  - `bun install` instead of `npm install`
+  - `bun run <script>` instead of `npm run <script>`
+  - `bunx <command>` instead of `npx <command>` unless project docs explicitly require `npx`
+- Do not add an npm lockfile.

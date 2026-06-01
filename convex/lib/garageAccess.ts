@@ -5,6 +5,7 @@ import type { MutationCtx, QueryCtx } from "../_generated/server";
 type GarageMemberRole = Doc<"garageMembers">["role"];
 
 const WRITE_ROLES: ReadonlySet<GarageMemberRole> = new Set(["owner", "admin", "tuner", "worker"]);
+const ADMIN_ROLES: ReadonlySet<GarageMemberRole> = new Set(["owner", "admin"]);
 
 export async function getActiveGarageMember(
   ctx: QueryCtx | MutationCtx,
@@ -39,6 +40,18 @@ export async function requireGarageWriteAccess(
   const member = await requireActiveGarageMember(ctx, garageId, authUserId);
   if (!WRITE_ROLES.has(member.role)) {
     throw new ConvexError("You do not have permission to modify vehicles in this garage");
+  }
+  return member;
+}
+
+export async function requireGarageAdminAccess(
+  ctx: QueryCtx | MutationCtx,
+  garageId: Id<"garages">,
+  authUserId: string,
+): Promise<Doc<"garageMembers">> {
+  const member = await requireActiveGarageMember(ctx, garageId, authUserId);
+  if (!ADMIN_ROLES.has(member.role)) {
+    throw new ConvexError("Only garage owners and admins can manage access");
   }
   return member;
 }

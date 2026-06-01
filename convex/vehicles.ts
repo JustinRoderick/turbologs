@@ -1,7 +1,12 @@
 import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { requireAuthUserId } from "./auth";
-import { canViewVehicle, requireActiveGarageMember, requireGarageWriteAccess } from "./lib/garageAccess";
+import {
+  canViewVehicle,
+  getActiveGarageMember,
+  requireActiveGarageMember,
+  requireGarageWriteAccess,
+} from "./lib/garageAccess";
 import {
   assertMotorsportProfile,
   createVehicleArgsValidator,
@@ -26,10 +31,10 @@ export const getGarageSummary = query({
   returns: v.union(v.null(), garageSummaryValidator),
   handler: async (ctx, args) => {
     const authUserId = await requireAuthUserId(ctx);
-    const member = await requireActiveGarageMember(ctx, args.garageId, authUserId);
+    const member = await getActiveGarageMember(ctx, args.garageId, authUserId);
 
     const garage = await ctx.db.get("garages", args.garageId);
-    if (!garage || garage.isArchived) {
+    if (!garage || garage.isArchived || !member || member.status !== "active") {
       return null;
     }
 

@@ -1,10 +1,9 @@
 import type { Id } from "../../../convex/_generated/dataModel";
+import type { MotorsportCategory, VehicleKind } from "@/lib/vehicle-labels";
 import {
   motorsportCategoryLabel,
   vehicleKindLabel,
   vehicleSubtitle,
-  type MotorsportCategory,
-  type VehicleKind,
 } from "@/lib/vehicle-labels";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
