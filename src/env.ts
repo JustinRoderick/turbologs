@@ -1,14 +1,16 @@
 import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod";
 
+const requiredFrontendEnvVariables = {
+  VITE_CONVEX_URL: z.string().url(),
+  VITE_CONVEX_SITE_URL: z.string().url(),
+  VITE_PUBLIC_POSTHOG_KEY: z.string().min(1),
+  VITE_PUBLIC_POSTHOG_HOST: z.string().url(),
+};
+
 export const env = createEnv({
   clientPrefix: "VITE_",
-  client: {
-    VITE_CONVEX_URL: z.string().url(),
-    VITE_CONVEX_SITE_URL: z.string().url(),
-    VITE_PUBLIC_POSTHOG_KEY: z.string().min(1),
-    VITE_PUBLIC_POSTHOG_HOST: z.string().url(),
-  },
+  client: requiredFrontendEnvVariables,
   runtimeEnvStrict: {
     VITE_CONVEX_URL: import.meta.env.VITE_CONVEX_URL,
     VITE_CONVEX_SITE_URL: import.meta.env.VITE_CONVEX_SITE_URL,
