@@ -1,11 +1,7 @@
 import { ConvexError } from "convex/values";
 import type { Doc, Id } from "../_generated/dataModel";
 import type { MutationCtx, QueryCtx } from "../_generated/server";
-
-type GarageMemberRole = Doc<"garageMembers">["role"];
-
-const WRITE_ROLES: ReadonlySet<GarageMemberRole> = new Set(["owner", "admin", "tuner", "worker"]);
-const ADMIN_ROLES: ReadonlySet<GarageMemberRole> = new Set(["owner", "admin"]);
+import { canLogRuns, canManageGarageAccess, canModifyVehicles } from "./garageRoles";
 
 export async function getActiveGarageMember(
   ctx: QueryCtx | MutationCtx,
@@ -38,7 +34,7 @@ export async function requireGarageWriteAccess(
   authUserId: string,
 ): Promise<Doc<"garageMembers">> {
   const member = await requireActiveGarageMember(ctx, garageId, authUserId);
-  if (!WRITE_ROLES.has(member.role)) {
+  if (!canModifyVehicles(member.role)) {
     throw new ConvexError("You do not have permission to modify vehicles in this garage");
   }
   return member;
@@ -50,14 +46,14 @@ export async function requireGarageAdminAccess(
   authUserId: string,
 ): Promise<Doc<"garageMembers">> {
   const member = await requireActiveGarageMember(ctx, garageId, authUserId);
-  if (!ADMIN_ROLES.has(member.role)) {
+  if (!canManageGarageAccess(member.role)) {
     throw new ConvexError("Only garage owners and admins can manage access");
   }
   return member;
 }
 
 export async function canViewVehicle(
-  ctx: QueryCtx,
+  ctx: QueryCtx | MutationCtx,
   car: Doc<"cars">,
   member: Doc<"garageMembers">,
 ): Promise<boolean> {
@@ -73,4 +69,32 @@ export async function canViewVehicle(
     .unique();
 
   return assignment?.status === "active";
+}
+
+export async function requireVehicleViewAccess(
+  ctx: QueryCtx | MutationCtx,
+  carId: Id<"cars">,
+  authUserId: string,
+): Promise<{ car: Doc<"cars">; member: Doc<"garageMembers"> }> {
+  const car = await ctx.db.get("cars", carId);
+  if (!car || !car.isActive) {
+    throw new ConvexError("Vehicle not found");
+  }
+  const member = await requireActiveGarageMember(ctx, car.garageId, authUserId);
+  if (!(await canViewVehicle(ctx, car, member))) {
+    throw new ConvexError("You do not have access to this vehicle");
+  }
+  return { car, member };
+}
+
+export async function requireVehicleRunWriteAccess(
+  ctx: MutationCtx,
+  carId: Id<"cars">,
+  authUserId: string,
+): Promise<{ car: Doc<"cars">; member: Doc<"garageMembers"> }> {
+  const { car, member } = await requireVehicleViewAccess(ctx, carId, authUserId);
+  if (!canLogRuns(member.role)) {
+    throw new ConvexError("You do not have permission to log runs for this vehicle");
+  }
+  return { car, member };
 }

@@ -171,6 +171,78 @@ const motorsportCategoryValueValidator = v.union(
   v.literal("general"),
 );
 
+export const get = query({
+  args: { carId: v.id("cars") },
+  returns: v.union(
+    v.null(),
+    v.object({
+      _id: v.id("cars"),
+      garageId: v.id("garages"),
+      name: v.string(),
+      vehicleKind: vehicleKindValueValidator,
+      motorsportCategory: motorsportCategoryValueValidator,
+      year: v.optional(v.number()),
+      make: v.optional(v.string()),
+      model: v.optional(v.string()),
+      engine: v.optional(v.string()),
+      transmission: v.optional(v.string()),
+      tire: v.optional(v.string()),
+      weightLbs: v.optional(v.number()),
+      drivetrain: v.optional(v.string()),
+      notes: v.optional(v.string()),
+      totalPasses: v.number(),
+      isActive: v.boolean(),
+      garageName: v.string(),
+      role: v.union(
+        v.literal("owner"),
+        v.literal("admin"),
+        v.literal("tuner"),
+        v.literal("worker"),
+        v.literal("viewer"),
+      ),
+    }),
+  ),
+  handler: async (ctx, args) => {
+    const authUserId = await requireAuthUserId(ctx);
+    const car = await ctx.db.get("cars", args.carId);
+    if (!car || !car.isActive) {
+      return null;
+    }
+    const member = await getActiveGarageMember(ctx, car.garageId, authUserId);
+    if (!member || member.status !== "active") {
+      return null;
+    }
+    if (!(await canViewVehicle(ctx, car, member))) {
+      return null;
+    }
+    const garage = await ctx.db.get("garages", car.garageId);
+    if (!garage || garage.isArchived) {
+      return null;
+    }
+
+    return {
+      _id: car._id,
+      garageId: car.garageId,
+      name: car.name,
+      vehicleKind: car.vehicleKind ?? "car",
+      motorsportCategory: car.motorsportCategory ?? "general",
+      year: car.year,
+      make: car.make,
+      model: car.model,
+      engine: car.engine,
+      transmission: car.transmission,
+      tire: car.tire,
+      weightLbs: car.weightLbs,
+      drivetrain: car.drivetrain,
+      notes: car.notes,
+      totalPasses: car.totalPasses,
+      isActive: car.isActive,
+      garageName: garage.name,
+      role: member.role,
+    };
+  },
+});
+
 export const getCategoryOptions = query({
   args: {},
   returns: v.object({

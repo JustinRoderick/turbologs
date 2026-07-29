@@ -17,7 +17,8 @@
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
     "env:validate": "better-env validate --environment development",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",

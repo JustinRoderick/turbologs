@@ -9,6 +9,7 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as datalogFiles from "../datalogFiles.js";
 import type * as emails from "../emails.js";
 import type * as env from "../env.js";
 import type * as garageAccessRequests from "../garageAccessRequests.js";
@@ -16,13 +17,28 @@ import type * as garageInvites from "../garageInvites.js";
 import type * as garageMembers from "../garageMembers.js";
 import type * as garages from "../garages.js";
 import type * as http from "../http.js";
+import type * as lib_dashboardStats from "../lib/dashboardStats.js";
+import type * as lib_densityAltitude from "../lib/densityAltitude.js";
 import type * as lib_garageAccess from "../lib/garageAccess.js";
 import type * as lib_garageAssignments from "../lib/garageAssignments.js";
+import type * as lib_garageRoles from "../lib/garageRoles.js";
+import type * as lib_openMeteo from "../lib/openMeteo.js";
+import type * as lib_runTiming from "../lib/runTiming.js";
 import type * as onboarding from "../onboarding.js";
 import type * as onboardingSync from "../onboardingSync.js";
+import type * as runInternal from "../runInternal.js";
+import type * as runValidators from "../runValidators.js";
+import type * as runs from "../runs.js";
 import type * as stripe from "../stripe.js";
+import type * as timeSlipActions from "../timeSlipActions.js";
+import type * as timeSlipExtractions from "../timeSlipExtractions.js";
+import type * as timeSlipInternal from "../timeSlipInternal.js";
+import type * as trackActions from "../trackActions.js";
+import type * as trackInternal from "../trackInternal.js";
+import type * as tracks from "../tracks.js";
 import type * as vehicleValidators from "../vehicleValidators.js";
 import type * as vehicles from "../vehicles.js";
+import type * as weatherActions from "../weatherActions.js";
 
 import type {
   ApiFromModules,
@@ -32,6 +48,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  datalogFiles: typeof datalogFiles;
   emails: typeof emails;
   env: typeof env;
   garageAccessRequests: typeof garageAccessRequests;
@@ -39,13 +56,28 @@ declare const fullApi: ApiFromModules<{
   garageMembers: typeof garageMembers;
   garages: typeof garages;
   http: typeof http;
+  "lib/dashboardStats": typeof lib_dashboardStats;
+  "lib/densityAltitude": typeof lib_densityAltitude;
   "lib/garageAccess": typeof lib_garageAccess;
   "lib/garageAssignments": typeof lib_garageAssignments;
+  "lib/garageRoles": typeof lib_garageRoles;
+  "lib/openMeteo": typeof lib_openMeteo;
+  "lib/runTiming": typeof lib_runTiming;
   onboarding: typeof onboarding;
   onboardingSync: typeof onboardingSync;
+  runInternal: typeof runInternal;
+  runValidators: typeof runValidators;
+  runs: typeof runs;
   stripe: typeof stripe;
+  timeSlipActions: typeof timeSlipActions;
+  timeSlipExtractions: typeof timeSlipExtractions;
+  timeSlipInternal: typeof timeSlipInternal;
+  trackActions: typeof trackActions;
+  trackInternal: typeof trackInternal;
+  tracks: typeof tracks;
   vehicleValidators: typeof vehicleValidators;
   vehicles: typeof vehicles;
+  weatherActions: typeof weatherActions;
 }>;
 
 /**

@@ -203,49 +203,122 @@ export default defineSchema({
     .index("by_car_id_and_member_auth_user_id", ["carId", "memberAuthUserId"])
     .index("by_garage_id_and_member_auth_user_id", ["garageId", "memberAuthUserId"]),
 
+  tracks: defineTable({
+    name: v.string(),
+    slug: v.optional(v.string()),
+    city: v.optional(v.string()),
+    state: v.optional(v.string()),
+    country: v.string(),
+    latitude: v.number(),
+    longitude: v.number(),
+    elevationFt: v.optional(v.number()),
+    timezone: v.optional(v.string()),
+    surface: v.union(v.literal("concrete"), v.literal("asphalt"), v.literal("other")),
+    isPublicCatalog: v.boolean(),
+    createdByGarageId: v.optional(v.id("garages")),
+    createdByAuthUserId: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_is_public_catalog", ["isPublicCatalog"])
+    .index("by_created_by_garage_id", ["createdByGarageId"])
+    .index("by_name", ["name"])
+    .searchIndex("search_name", {
+      searchField: "name",
+      filterFields: ["isPublicCatalog", "country"],
+    }),
+
   weatherSnapshots: defineTable({
     garageId: v.id("garages"),
     carId: v.optional(v.id("cars")),
+    trackId: v.optional(v.id("tracks")),
+    runId: v.optional(v.id("runs")),
     source: v.union(v.literal("manual"), v.literal("api")),
+    provider: v.optional(v.union(v.literal("open_meteo"), v.literal("manual"))),
     observedAt: v.number(),
     temperatureF: v.number(),
     humidityPct: v.number(),
+    dewPointF: v.optional(v.number()),
     barometricPressureInHg: v.number(),
     densityAltitudeFt: v.number(),
     windMph: v.optional(v.number()),
     windDirectionDeg: v.optional(v.number()),
+    windGustMph: v.optional(v.number()),
+    precipitationIn: v.optional(v.number()),
+    shortwaveRadiation: v.optional(v.number()),
+    elevationFt: v.optional(v.number()),
     trackTempF: v.optional(v.number()),
+    trackTempSource: v.optional(
+      v.union(v.literal("estimated_soil"), v.literal("manual"), v.literal("unknown")),
+    ),
     createdByAuthUserId: v.optional(v.string()),
     createdAt: v.number(),
   })
     .index("by_garage_id_and_observed_at", ["garageId", "observedAt"])
-    .index("by_car_id_and_observed_at", ["carId", "observedAt"]),
+    .index("by_car_id_and_observed_at", ["carId", "observedAt"])
+    .index("by_run_id", ["runId"])
+    .index("by_track_id_and_observed_at", ["trackId", "observedAt"]),
 
   runs: defineTable({
     garageId: v.id("garages"),
     carId: v.id("cars"),
+    trackId: v.optional(v.id("tracks")),
     driverAuthUserId: v.optional(v.string()),
     runAt: v.number(),
     trackName: v.optional(v.string()),
     eventName: v.optional(v.string()),
     lane: v.optional(v.union(v.literal("left"), v.literal("right"))),
-    sixtyFt: v.number(),
+    treeType: v.optional(v.union(v.literal("pro"), v.literal("sportsman"), v.literal("unknown"))),
+    reactionTime: v.optional(v.number()),
+    dialInSeconds: v.optional(v.number()),
+    delayBox: v.optional(v.number()),
+    result: v.optional(
+      v.union(
+        v.literal("win"),
+        v.literal("loss"),
+        v.literal("solo"),
+        v.literal("redlight"),
+        v.literal("unknown"),
+      ),
+    ),
+    sixtyFt: v.optional(v.number()),
     threeThirtyFt: v.optional(v.number()),
     oneEighthEt: v.optional(v.number()),
     oneEighthMph: v.optional(v.number()),
     thousandFt: v.optional(v.number()),
-    quarterEt: v.number(),
-    quarterMph: v.number(),
+    quarterEt: v.optional(v.number()),
+    quarterMph: v.optional(v.number()),
     weatherSnapshotId: v.optional(v.id("weatherSnapshots")),
+    weatherStatus: v.optional(
+      v.union(
+        v.literal("pending"),
+        v.literal("ready"),
+        v.literal("failed"),
+        v.literal("manual"),
+      ),
+    ),
+    weatherError: v.optional(v.string()),
     activeTuneFileId: v.optional(v.id("tuneFiles")),
+    ecuBrand: v.optional(
+      v.union(
+        v.literal("fueltech"),
+        v.literal("holley"),
+        v.literal("haltech"),
+        v.literal("other"),
+      ),
+    ),
     notes: v.optional(v.string()),
+    isArchived: v.optional(v.boolean()),
     createdByAuthUserId: v.string(),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
     .index("by_car_id_and_run_at", ["carId", "runAt"])
     .index("by_garage_id_and_run_at", ["garageId", "runAt"])
-    .index("by_weather_snapshot_id", ["weatherSnapshotId"]),
+    .index("by_track_id_and_run_at", ["trackId", "runAt"])
+    .index("by_weather_snapshot_id", ["weatherSnapshotId"])
+    .index("by_weather_status", ["weatherStatus"]),
 
   maintenanceLogs: defineTable({
     garageId: v.id("garages"),
@@ -309,6 +382,15 @@ export default defineSchema({
     fileType: v.string(),
     fileSizeBytes: v.number(),
     checksumSha256: v.optional(v.string()),
+    ecuBrand: v.optional(
+      v.union(
+        v.literal("fueltech"),
+        v.literal("holley"),
+        v.literal("haltech"),
+        v.literal("other"),
+      ),
+    ),
+    ecuSoftware: v.optional(v.string()),
     visibility: v.union(
       v.literal("garage"),
       v.literal("assigned_members"),
@@ -390,6 +472,9 @@ export default defineSchema({
       v.literal("needs_review"),
     ),
     confidence: v.optional(v.number()),
+    reactionTime: v.optional(v.number()),
+    dialInSeconds: v.optional(v.number()),
+    lane: v.optional(v.union(v.literal("left"), v.literal("right"))),
     sixtyFt: v.optional(v.number()),
     threeThirtyFt: v.optional(v.number()),
     oneEighthEt: v.optional(v.number()),
@@ -398,6 +483,7 @@ export default defineSchema({
     quarterEt: v.optional(v.number()),
     quarterMph: v.optional(v.number()),
     ocrRawText: v.optional(v.string()),
+    errorMessage: v.optional(v.string()),
     extractedAt: v.optional(v.number()),
     reviewedByAuthUserId: v.optional(v.string()),
     reviewedAt: v.optional(v.number()),

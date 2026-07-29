@@ -2,11 +2,25 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { useMutation, useQuery } from "convex/react";
-import { Check, Mail, Plus, Send, ShieldCheck, UserPlus, X } from "lucide-react";
+import {
+  Check,
+  Mail,
+  Plus,
+  Send,
+  ShieldCheck,
+  UserPlus,
+  Users,
+  X,
+} from "lucide-react";
 import { api } from "../../../../../convex/_generated/api";
 import type { Id } from "../../../../../convex/_generated/dataModel";
+import { DashboardStatCard } from "@/components/dashboard/DashboardStatCard";
+import { MonthlyPassesChart } from "@/components/dashboard/MonthlyPassesChart";
+import { NamedCountBarChart } from "@/components/dashboard/NamedCountBarChart";
+import { ResultBreakdownChart } from "@/components/dashboard/ResultBreakdownChart";
 import type { VehicleCardData } from "@/components/vehicles/VehicleCard";
 import { VehicleCard } from "@/components/vehicles/VehicleCard";
+import { formatEt, formatMph, formatRunDate } from "@/lib/run-format";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,6 +42,7 @@ export const Route = createFileRoute("/_authenticated/garages/$garageId/")({
 function GaragePage() {
   const { garageId } = Route.useParams();
   const garageIdTyped = garageId as Id<"garages">;
+  const [now] = useState(() => Date.now());
 
   const garage = useQuery(api.vehicles.getGarageSummary, { garageId: garageIdTyped });
   const preview = useQuery(
@@ -38,10 +53,19 @@ function GaragePage() {
     api.vehicles.listByGarage,
     garage ? { garageId: garageIdTyped } : "skip",
   );
+  const dashboard = useQuery(
+    api.runs.dashboardByGarage,
+    garage ? { garageId: garageIdTyped, now } : "skip",
+  );
 
-  if (garage === undefined || (garage === null && preview === undefined) || (garage && vehicles === undefined)) {
+  if (
+    garage === undefined ||
+    (garage === null && preview === undefined) ||
+    (garage && vehicles === undefined) ||
+    (garage && dashboard === undefined)
+  ) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-12">
+      <div className="mx-auto max-w-6xl px-4 py-12">
         <p className="text-sm text-muted-foreground">Loading garage…</p>
       </div>
     );
@@ -49,7 +73,7 @@ function GaragePage() {
 
   if (garage === null || preview === null) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-12">
+      <div className="mx-auto max-w-6xl px-4 py-12">
         {preview ? (
           <GarageAccessRequestCard preview={preview} />
         ) : (
@@ -72,14 +96,20 @@ function GaragePage() {
   const vehicleRows = vehicles ?? [];
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-8 px-4 py-12">
-      <header className="flex flex-wrap items-start justify-between gap-4">
+    <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12">
+      <header className="flex flex-wrap items-start justify-between gap-4 border-b border-border/60 pb-6">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">{garage.name}</h1>
+          <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">Garage ops</p>
+          <h1 className="mt-1 text-3xl font-semibold tracking-tight">{garage.name}</h1>
           <p className="mt-1 text-sm text-muted-foreground capitalize">
             Your role: {garage.role}
             {garage.slug ? ` · ${garage.slug}` : ""}
           </p>
+          {dashboard?.lastRunAt ? (
+            <p className="mt-2 text-xs uppercase tracking-[0.14em] text-muted-foreground">
+              Last activity · {formatRunDate(dashboard.lastRunAt)}
+            </p>
+          ) : null}
         </div>
         {canAddVehicle ? (
           <Button asChild>
@@ -91,8 +121,114 @@ function GaragePage() {
         ) : null}
       </header>
 
+      {dashboard ? (
+        <>
+          <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <DashboardStatCard label="Vehicles" value={String(dashboard.totalVehicles)} />
+            <DashboardStatCard label="Total passes" value={String(dashboard.totalRuns)} />
+            <DashboardStatCard label="Active members" value={String(dashboard.activeMembers)} />
+            <DashboardStatCard
+              label="Win rate"
+              value={dashboard.winRatePct === null ? "—" : `${dashboard.winRatePct}%`}
+              hint="Across decided rounds"
+            />
+            <DashboardStatCard label="Best garage ET" value={formatEt(dashboard.bestQuarterEt)} hint={`Avg ${formatEt(dashboard.averageQuarterEt)}`} />
+            <DashboardStatCard label="Best trap MPH" value={formatMph(dashboard.bestQuarterMph)} />
+            <DashboardStatCard label="Best 60ft" value={formatEt(dashboard.bestSixtyFt)} />
+            <DashboardStatCard
+              label="Weather coverage"
+              value={`${dashboard.weatherCoveragePct}%`}
+              hint={
+                canManageAccess
+                  ? `${dashboard.pendingInvites} invites · ${dashboard.pendingAccessRequests} requests`
+                  : "Passes with weather attached"
+              }
+            />
+          </section>
+
+          <section className="grid gap-4 lg:grid-cols-3">
+            <MonthlyPassesChart
+              title="Garage activity"
+              description="Passes logged across visible vehicles"
+              data={dashboard.charts.monthlyPasses}
+            />
+            <NamedCountBarChart
+              title="Passes by vehicle"
+              description="Which cars are generating data"
+              data={dashboard.charts.passesByVehicle}
+              emptyMessage="Add a vehicle and log a pass to populate this chart."
+              color="var(--chart-1)"
+            />
+            <ResultBreakdownChart breakdown={dashboard.charts.resultBreakdown} />
+          </section>
+
+          <section className="grid gap-4 lg:grid-cols-2">
+            <NamedCountBarChart
+              title="Tracks raced"
+              description="Most-used strips for this garage"
+              data={dashboard.charts.trackBreakdown}
+              emptyMessage="Track names appear after runs are logged with a track."
+              color="var(--chart-3)"
+            />
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Users className="size-4" />
+                  Recent garage activity
+                </CardTitle>
+                <CardDescription>Latest passes across the fleet</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {dashboard.recent.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No runs logged yet.</p>
+                ) : (
+                  <ul className="divide-y">
+                    {dashboard.recent.map((run) => (
+                      <li key={run._id} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm">
+                        <div>
+                          <Link
+                            to="/garages/$garageId/vehicles/$vehicleId/runs/$runId"
+                            params={{
+                              garageId,
+                              vehicleId: run.carId,
+                              runId: run._id,
+                            }}
+                            className="font-medium underline-offset-2 hover:underline"
+                          >
+                            {run.carName}
+                          </Link>
+                          <p className="text-xs text-muted-foreground">
+                            {formatRunDate(run.runAt)}
+                            {run.trackName ? ` · ${run.trackName}` : ""}
+                            {run.result ? ` · ${run.result}` : ""}
+                          </p>
+                        </div>
+                        <div className="text-right tabular-nums">
+                          <p>{formatEt(run.quarterEt)} @ {formatMph(run.quarterMph)}</p>
+                          <p className="text-xs text-muted-foreground">60ft {formatEt(run.sixtyFt)}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </CardContent>
+            </Card>
+          </section>
+        </>
+      ) : null}
+
       <section className="flex flex-col gap-4">
-        <h2 className="text-lg font-medium">Vehicles</h2>
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-lg font-medium">Vehicles</h2>
+          {canAddVehicle ? (
+            <Button variant="outline" size="sm" asChild>
+              <Link to="/garages/$garageId/vehicles/new" params={{ garageId }}>
+                <Plus className="size-4" />
+                Add
+              </Link>
+            </Button>
+          ) : null}
+        </div>
         {vehicleRows.length === 0 ? (
           <Card>
             <CardHeader>
@@ -113,7 +249,7 @@ function GaragePage() {
             ) : null}
           </Card>
         ) : (
-          <ul className="grid gap-4 sm:grid-cols-2">
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {vehicleRows.map((vehicle: VehicleCardData) => (
               <li key={vehicle._id}>
                 <VehicleCard vehicle={vehicle} />

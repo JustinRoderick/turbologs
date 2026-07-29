@@ -18,6 +18,9 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthenticatedGaragesGarageIdIndexRouteImport } from './routes/_authenticated/garages/$garageId/index'
 import { Route as AuthenticatedGaragesGarageIdVehiclesNewRouteImport } from './routes/_authenticated/garages/$garageId/vehicles/new'
+import { Route as AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRouteImport } from './routes/_authenticated/garages/$garageId/vehicles/$vehicleId/index'
+import { Route as AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRouteImport } from './routes/_authenticated/garages/$garageId/vehicles/$vehicleId/runs/new'
+import { Route as AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRouteImport } from './routes/_authenticated/garages/$garageId/vehicles/$vehicleId/runs/$runId'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -65,6 +68,24 @@ const AuthenticatedGaragesGarageIdVehiclesNewRoute =
     path: '/garages/$garageId/vehicles/new',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRoute =
+  AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRouteImport.update({
+    id: '/garages/$garageId/vehicles/$vehicleId/',
+    path: '/garages/$garageId/vehicles/$vehicleId/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRoute =
+  AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRouteImport.update({
+    id: '/garages/$garageId/vehicles/$vehicleId/runs/new',
+    path: '/garages/$garageId/vehicles/$vehicleId/runs/new',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRoute =
+  AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRouteImport.update({
+    id: '/garages/$garageId/vehicles/$vehicleId/runs/$runId',
+    path: '/garages/$garageId/vehicles/$vehicleId/runs/$runId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -75,6 +96,9 @@ export interface FileRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/garages/$garageId/': typeof AuthenticatedGaragesGarageIdIndexRoute
   '/garages/$garageId/vehicles/new': typeof AuthenticatedGaragesGarageIdVehiclesNewRoute
+  '/garages/$garageId/vehicles/$vehicleId/': typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRoute
+  '/garages/$garageId/vehicles/$vehicleId/runs/$runId': typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRoute
+  '/garages/$garageId/vehicles/$vehicleId/runs/new': typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -85,6 +109,9 @@ export interface FileRoutesByTo {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/garages/$garageId': typeof AuthenticatedGaragesGarageIdIndexRoute
   '/garages/$garageId/vehicles/new': typeof AuthenticatedGaragesGarageIdVehiclesNewRoute
+  '/garages/$garageId/vehicles/$vehicleId': typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRoute
+  '/garages/$garageId/vehicles/$vehicleId/runs/$runId': typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRoute
+  '/garages/$garageId/vehicles/$vehicleId/runs/new': typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -97,6 +124,9 @@ export interface FileRoutesById {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authenticated/garages/$garageId/': typeof AuthenticatedGaragesGarageIdIndexRoute
   '/_authenticated/garages/$garageId/vehicles/new': typeof AuthenticatedGaragesGarageIdVehiclesNewRoute
+  '/_authenticated/garages/$garageId/vehicles/$vehicleId/': typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRoute
+  '/_authenticated/garages/$garageId/vehicles/$vehicleId/runs/$runId': typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRoute
+  '/_authenticated/garages/$garageId/vehicles/$vehicleId/runs/new': typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -109,6 +139,9 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/garages/$garageId/'
     | '/garages/$garageId/vehicles/new'
+    | '/garages/$garageId/vehicles/$vehicleId/'
+    | '/garages/$garageId/vehicles/$vehicleId/runs/$runId'
+    | '/garages/$garageId/vehicles/$vehicleId/runs/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -119,6 +152,9 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/garages/$garageId'
     | '/garages/$garageId/vehicles/new'
+    | '/garages/$garageId/vehicles/$vehicleId'
+    | '/garages/$garageId/vehicles/$vehicleId/runs/$runId'
+    | '/garages/$garageId/vehicles/$vehicleId/runs/new'
   id:
     | '__root__'
     | '/'
@@ -130,6 +166,9 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/_authenticated/garages/$garageId/'
     | '/_authenticated/garages/$garageId/vehicles/new'
+    | '/_authenticated/garages/$garageId/vehicles/$vehicleId/'
+    | '/_authenticated/garages/$garageId/vehicles/$vehicleId/runs/$runId'
+    | '/_authenticated/garages/$garageId/vehicles/$vehicleId/runs/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -205,6 +244,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedGaragesGarageIdVehiclesNewRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/garages/$garageId/vehicles/$vehicleId/': {
+      id: '/_authenticated/garages/$garageId/vehicles/$vehicleId/'
+      path: '/garages/$garageId/vehicles/$vehicleId'
+      fullPath: '/garages/$garageId/vehicles/$vehicleId/'
+      preLoaderRoute: typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/garages/$garageId/vehicles/$vehicleId/runs/new': {
+      id: '/_authenticated/garages/$garageId/vehicles/$vehicleId/runs/new'
+      path: '/garages/$garageId/vehicles/$vehicleId/runs/new'
+      fullPath: '/garages/$garageId/vehicles/$vehicleId/runs/new'
+      preLoaderRoute: typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/garages/$garageId/vehicles/$vehicleId/runs/$runId': {
+      id: '/_authenticated/garages/$garageId/vehicles/$vehicleId/runs/$runId'
+      path: '/garages/$garageId/vehicles/$vehicleId/runs/$runId'
+      fullPath: '/garages/$garageId/vehicles/$vehicleId/runs/$runId'
+      preLoaderRoute: typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
@@ -213,6 +273,9 @@ interface AuthenticatedRouteChildren {
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedGaragesGarageIdIndexRoute: typeof AuthenticatedGaragesGarageIdIndexRoute
   AuthenticatedGaragesGarageIdVehiclesNewRoute: typeof AuthenticatedGaragesGarageIdVehiclesNewRoute
+  AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRoute: typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRoute
+  AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRoute: typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRoute
+  AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRoute: typeof AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -222,6 +285,12 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
     AuthenticatedGaragesGarageIdIndexRoute,
   AuthenticatedGaragesGarageIdVehiclesNewRoute:
     AuthenticatedGaragesGarageIdVehiclesNewRoute,
+  AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRoute:
+    AuthenticatedGaragesGarageIdVehiclesVehicleIdIndexRoute,
+  AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRoute:
+    AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsRunIdRoute,
+  AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRoute:
+    AuthenticatedGaragesGarageIdVehiclesVehicleIdRunsNewRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
