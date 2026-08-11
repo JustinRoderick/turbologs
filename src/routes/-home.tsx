@@ -56,10 +56,10 @@ export function Home() {
             className="hidden rounded-full px-5 font-semibold tracking-wide sm:inline-flex"
             asChild
           >
-            <Link to="/">Login</Link>
+            <Link to="/auth/sign-in">Login</Link>
           </Button>
           <Button className="rounded-full px-5 font-semibold tracking-wide" asChild>
-            <Link to="/">Get Started</Link>
+            <Link to="/auth/sign-up">Get Started</Link>
           </Button>
         </div>
       </motion.nav>
@@ -115,7 +115,7 @@ export function Home() {
               className="rounded-full px-8 py-6 text-lg font-bold uppercase tracking-wider"
               asChild
             >
-              <Link to="/">Start Logging For Free</Link>
+              <Link to="/auth/sign-up">Start Logging For Free</Link>
             </Button>
             <Button
               size="lg"
@@ -256,7 +256,7 @@ export function Home() {
                   className="w-full rounded-2xl py-6 text-lg font-bold uppercase tracking-wider"
                   asChild
                 >
-                  <Link to="/">Start Free</Link>
+                  <Link to="/auth/sign-up">Start Free</Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -315,7 +315,7 @@ export function Home() {
                   className="w-full rounded-2xl py-6 text-lg font-bold uppercase tracking-wider"
                   asChild
                 >
-                  <Link to="/">Go Pro Today</Link>
+                  <Link to="/auth/sign-up">Go Pro Today</Link>
                 </Button>
               </CardFooter>
             </Card>
