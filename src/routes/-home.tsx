@@ -56,7 +56,7 @@ export function Home() {
             className="hidden rounded-full px-5 font-semibold tracking-wide sm:inline-flex"
             asChild
           >
-            <Link to="/auth/sign-in">Login</Link>
+            <Link to="/auth/sign-in" search={{ redirect: "/dashboard" }}>Login</Link>
           </Button>
           <Button className="rounded-full px-5 font-semibold tracking-wide" asChild>
             <Link to="/auth/sign-up">Get Started</Link>
